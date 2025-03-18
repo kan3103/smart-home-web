@@ -1,0 +1,637 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { MoreVertical } from "./MoreVertical";
+import { ProfileInMessage } from "./ProfileInMessage";
+import { Search } from "./Search";
+import { Toggle } from "./Toggle";
+import airplay from "./airplay.png";
+import arrow from "./arrow.svg";
+import bell from "./bell.svg";
+import drop from "./drop.png";
+import ellipse262 from "./ellipse-26-2.svg";
+import ellipse263 from "./ellipse-26-3.svg";
+import ellipse26 from "./ellipse-26.svg";
+import groupAlt from "./group-alt.png";
+import highVolume1 from "./high-volume-1.png";
+import home from "./home.svg";
+import image from "./image.png";
+import image1 from "./image.svg";
+import lineChartUp from "./line-chart-up.png";
+import maskGroup2 from "./mask-group-2.png";
+import maskGroup3 from "./mask-group-3.png";
+import maskGroup4 from "./mask-group-4.png";
+import maskGroup5 from "./mask-group-5.png";
+import maskGroup6 from "./mask-group-6.png";
+import maskGroup from "./mask-group.png";
+import mic from "./mic.png";
+import plus2 from "./plus-2.svg";
+import plus3 from "./plus-3.svg";
+import plus from "./plus.svg";
+import powerOff from "./power-off.png";
+import routine from "./routine.png";
+import settings from "./settings.png";
+import shortLeft from "./short-left.png";
+import subtract from "./subtract.svg";
+import thermometer from "./thermometer.png";
+import vector3014 from "./vector-3014.svg";
+
+export const Rooms = () => {
+  return (
+    <div className="bg-[#f3f3f3] flex flex-row justify-center w-full">
+      <div className="bg-[#f3f3f3] w-[1512px] h-[982px]">
+        <div className="relative w-[1510px] h-[982px]">
+          <div className="flex w-[136px] h-[35px] items-center justify-center gap-2.5 absolute top-[109px] left-[903px] bg-[#6b6bf9] rounded-[5px]">
+            <img
+              className="relative w-[18px] h-[18px]"
+              alt="Edit plus"
+              src={plus}
+            />
+
+            <div className="relative w-fit [font-family:'Roboto-Medium',Helvetica] font-medium text-white tracking-[0] text-base leading-[normal] whitespace-nowrap">
+              Add room
+            </div>
+          </div>
+
+          <div className="absolute w-[418px] h-[270px] top-[101px] left-[1067px] bg-[url(/rectangle-139.svg)] bg-cover bg-[50%_50%]">
+            <div className="absolute w-[394px] h-[41px] top-4 left-[17px] bg-[#ffffff33] rounded-[5px] backdrop-blur-[20px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(20px)_brightness(100%)]" />
+
+            <div className="inline-flex items-start gap-2.5 absolute top-[25px] left-[373px]">
+              <img className="relative w-6 h-6" alt="Arrow" src={arrow} />
+            </div>
+
+            <div className="absolute top-[26px] left-[290px] [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-[#000000] text-base text-center tracking-[0.32px] leading-[normal] whitespace-nowrap">
+              Camera 1
+            </div>
+
+            <div className="absolute w-[15px] h-[15px] top-[29px] left-[265px] bg-[#f44b4b] rounded-[7.5px]" />
+          </div>
+
+          <div className="absolute top-[104px] left-[105px] font-h2-bold-28 font-[number:var(--h2-bold-28-font-weight)] text-x303030-black-100 text-[length:var(--h2-bold-28-font-size)] tracking-[var(--h2-bold-28-letter-spacing)] leading-[var(--h2-bold-28-line-height)] [font-style:var(--h2-bold-28-font-style)]">
+            Living Room
+          </div>
+
+          <div className="absolute top-[116px] left-[500px] [font-family:'Roboto-Medium',Helvetica] font-medium text-lightgrey text-xl tracking-[0] leading-[normal] whitespace-nowrap">
+            Store Room
+          </div>
+
+          <div className="absolute top-[116px] left-[638px] [font-family:'Roboto-Medium',Helvetica] font-medium text-lightgrey text-xl tracking-[0] leading-[normal] whitespace-nowrap">
+            Kitchen
+          </div>
+
+          <div className="absolute top-[116px] left-[312px] [font-family:'Roboto-Medium',Helvetica] font-medium text-lightgrey text-xl tracking-[0] leading-[normal] whitespace-nowrap">
+            Master BedRoom
+          </div>
+
+          <div className="absolute w-[417px] h-[246px] top-[693px] left-[1067px] bg-white rounded-[15px]">
+            <div className="inline-flex flex-col items-start gap-[18px] relative top-5 left-[30px]">
+              <div className="flex w-[335px] items-center gap-[15px] relative flex-[0_0_auto]">
+                <img
+                  className="relative w-5 h-5 object-cover"
+                  alt="Ellipse"
+                  src={ellipse26}
+                />
+
+                <div className="flex flex-col items-start gap-1 relative flex-1 grow">
+                  <div className="flex flex-col items-start gap-1 pl-0 pr-2.5 pt-0 pb-0.5 relative self-stretch w-full flex-[0_0_auto] rounded-lg">
+                    <p className="relative self-stretch mt-[-1.00px] opacity-80 font-lato-reg-12 font-[number:var(--lato-reg-12-font-weight)] text-darktheme-black-bg text-[length:var(--lato-reg-12-font-size)] tracking-[var(--lato-reg-12-letter-spacing)] leading-[var(--lato-reg-12-line-height)] [font-style:var(--lato-reg-12-font-style)]">
+                      Catharein switch on the Geyser 5m ago
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex w-[335px] items-center gap-[15px] relative flex-[0_0_auto]">
+                <img
+                  className="relative w-5 h-5 object-cover"
+                  alt="Ellipse"
+                  src={image1}
+                />
+
+                <div className="flex flex-col items-start gap-1 relative flex-1 grow">
+                  <div className="flex flex-col items-start gap-1 pl-0 pr-2.5 pt-0 pb-0.5 relative self-stretch w-full flex-[0_0_auto] rounded-lg">
+                    <p className="relative self-stretch mt-[-1.00px] opacity-80 font-lato-reg-12 font-[number:var(--lato-reg-12-font-weight)] text-darktheme-black-bg text-[length:var(--lato-reg-12-font-size)] tracking-[var(--lato-reg-12-letter-spacing)] leading-[var(--lato-reg-12-line-height)] [font-style:var(--lato-reg-12-font-style)]">
+                      Alexa is about to die - low battery 2%
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex w-[335px] items-center gap-[15px] relative flex-[0_0_auto]">
+                <img
+                  className="relative w-5 h-5 object-cover"
+                  alt="Ellipse"
+                  src={ellipse262}
+                />
+
+                <div className="flex flex-col items-start gap-1 relative flex-1 grow">
+                  <div className="flex flex-col items-start gap-1 pl-0 pr-2.5 pt-0 pb-0.5 relative self-stretch w-full flex-[0_0_auto] rounded-lg">
+                    <p className="relative self-stretch mt-[-1.00px] opacity-80 font-lato-reg-12 font-[number:var(--lato-reg-12-font-weight)] text-darktheme-black-bg text-[length:var(--lato-reg-12-font-size)] tracking-[var(--lato-reg-12-letter-spacing)] leading-[var(--lato-reg-12-line-height)] [font-style:var(--lato-reg-12-font-style)]">
+                      Alexa is about to die - low battery 2%
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-end justify-end gap-2 relative self-stretch w-full flex-[0_0_auto]">
+                <div className="flex w-[335px] items-start gap-[15px] relative flex-[0_0_auto]">
+                  <img
+                    className="relative w-5 h-5 object-cover"
+                    alt="Ellipse"
+                    src={ellipse263}
+                  />
+
+                  <div className="flex flex-col items-start gap-1 relative flex-1 grow">
+                    <div className="flex flex-col items-start gap-1 pl-0 pr-2.5 pt-0 pb-0.5 relative self-stretch w-full flex-[0_0_auto] rounded-lg">
+                      <p className="relative self-stretch mt-[-1.00px] opacity-80 [font-family:'Lato-Regular',Helvetica] font-normal text-darktheme-black-bg text-xs tracking-[0] leading-[normal]">
+                        <span className="font-lato-reg-12 font-[number:var(--lato-reg-12-font-weight)] text-[#1f1f1f] text-[length:var(--lato-reg-12-font-size)] tracking-[var(--lato-reg-12-letter-spacing)] [font-style:var(--lato-reg-12-font-style)] leading-[var(--lato-reg-12-line-height)]">
+                          Joey wants to create a{" "}
+                        </span>
+
+                        <span className="[font-family:'Lato-Bold',Helvetica] font-bold">
+                          Routine
+                        </span>
+
+                        <span className="font-lato-reg-12 font-[number:var(--lato-reg-12-font-weight)] text-[#1f1f1f] text-[length:var(--lato-reg-12-font-size)] tracking-[var(--lato-reg-12-letter-spacing)] [font-style:var(--lato-reg-12-font-style)] leading-[var(--lato-reg-12-line-height)]">
+                          {" "}
+                          vaccum bot in living room.
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex w-[299px] items-start justify-end gap-2 relative flex-[0_0_auto]">
+                  <div className="relative w-[3px] h-[55px] bg-[#6b6bf9] opacity-50" />
+
+                  <div className="flex flex-col items-start gap-2 relative flex-1 grow">
+                    <div className="flex items-center gap-1.5 pl-0 pr-2.5 pt-0 pb-0.5 relative self-stretch w-full flex-[0_0_auto] rounded-lg">
+                      <div className="relative w-fit mt-[-1.00px] [font-family:'Lato-Regular',Helvetica] font-normal text-[#6b6bf9] text-[10px] tracking-[0] leading-[normal] whitespace-nowrap">
+                        View Routine
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-1 relative self-stretch w-full flex-[0_0_auto]">
+                      <div className="flex w-[106px] h-7 items-center justify-center gap-2.5 relative rounded-[5px] border border-solid border-[#000000] opacity-60">
+                        <div className="relative w-fit [font-family:'Roboto-Bold',Helvetica] font-bold text-[#1f1f1f] text-xs tracking-[0] leading-[normal] whitespace-nowrap">
+                          Decline
+                        </div>
+                      </div>
+
+                      <div className="flex w-[106px] h-7 items-center justify-center gap-2.5 relative bg-[#6b6bf9] rounded-[5px]">
+                        <div className="relative w-fit [font-family:'Roboto-Bold',Helvetica] font-bold text-white text-xs tracking-[0] leading-[normal] whitespace-nowrap">
+                          Approve
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute top-[654px] left-[1067px] [font-family:'Roboto-Bold',Helvetica] font-bold text-[#000000] text-xl tracking-[0.20px] leading-[normal] whitespace-nowrap">
+            Recent Activity
+          </div>
+
+          <img
+            className="absolute w-[38px] h-[38px] top-[648px] left-[1446px]"
+            alt="Arrow short left"
+            src={shortLeft}
+          />
+
+          <div className="flex w-[107px] h-[35px] items-center justify-center gap-2.5 pl-1.5 pr-0 py-0 absolute top-[172px] left-[105px] bg-white rounded-[5px]">
+            <div className="relative w-fit [font-family:'Roboto-Medium',Helvetica] font-medium text-[#646474] text-base tracking-[0] leading-[normal] whitespace-nowrap">
+              6 Devices
+            </div>
+          </div>
+
+          <div className="absolute w-[419px] h-[42px] top-[386px] left-[1067px] bg-white rounded-[15px]">
+            <div className="absolute top-[11px] left-[18px] opacity-50 [font-family:'Roboto-Medium',Helvetica] font-medium text-[#000000] text-base text-center tracking-[0.32px] leading-[normal] whitespace-nowrap">
+              Zoom
+            </div>
+
+            <div className="absolute w-[216px] h-3.5 top-3.5 left-[70px]">
+              <div className="absolute w-[216px] h-1 top-[5px] left-0 bg-[#d9d9d9] rounded-sm" />
+
+              <div className="absolute w-[93px] h-1 top-[5px] left-0 bg-[#6b6bf9] rounded-sm" />
+
+              <div className="absolute w-3.5 h-3.5 top-0 left-[85px] bg-[#6b6bf9] rounded-[7px] border-2 border-solid border-white" />
+            </div>
+
+            <img
+              className="absolute w-[21px] h-[21px] top-[11px] left-[308px] object-cover"
+              alt="Mic"
+              src={mic}
+            />
+
+            <img
+              className="absolute w-[22px] h-[22px] top-2.5 left-[382px] object-cover"
+              alt="Power off"
+              src={powerOff}
+            />
+
+            <img
+              className="absolute w-[21px] h-[21px] top-[11px] left-[345px] object-cover"
+              alt="High volume"
+              src={highVolume1}
+            />
+          </div>
+
+          <div className="absolute w-[419px] h-[173px] top-[454px] left-[1067px]">
+            <div className="absolute w-[417px] h-[130px] top-[43px] left-0 bg-white rounded-[15px]">
+              <div className="inline-flex items-start gap-[15px] relative top-[23px] left-5">
+                <ProfileInMessage
+                  className="!flex-[0_0_auto]"
+                  divClassName="!text-[#1f1f1f] !tracking-[0] !text-sm ![font-style:unset] !font-bold ![font-family:'Lato-Bold',Helvetica] !leading-[normal]"
+                  group="group-3224-2.png"
+                  text="Blessy"
+                  text1="Partial Access"
+                />
+                <ProfileInMessage
+                  className="!flex-[0_0_auto]"
+                  group="group-3224-3.png"
+                  text="Vinoth"
+                  text1="Admin"
+                />
+                <ProfileInMessage
+                  className="!flex-[0_0_auto]"
+                  group="group-3224-4.png"
+                  text="Vicky"
+                  text1="Partial Access"
+                />
+              </div>
+            </div>
+
+            <div className="absolute top-[7px] left-0 [font-family:'Roboto-Bold',Helvetica] font-bold text-[#000000] text-xl tracking-[0.20px] leading-[normal] whitespace-nowrap">
+              Accessable Members
+            </div>
+
+            <img
+              className="absolute w-[38px] h-[38px] top-0 left-[379px]"
+              alt="Arrow short left"
+              src={image}
+            />
+
+            <div className="absolute w-[105px] h-[30px] top-1 left-[266px]">
+              <div className="relative w-[103px] h-[30px] bg-white rounded-[5px]">
+                <div className="absolute top-[7px] left-[31px] [font-family:'Roboto-Medium',Helvetica] font-medium text-white-theme-gray-6 text-sm tracking-[0] leading-4 whitespace-nowrap">
+                  Add new
+                </div>
+
+                <img
+                  className="absolute w-[18px] h-[18px] top-1.5 left-2"
+                  alt="Edit plus"
+                  src={plus2}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute w-[158px] h-[158px] top-[405px] left-[105px] bg-white rounded-[15px]">
+            <div className="top-[25px] left-[27px] absolute [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              on
+            </div>
+
+            <div className="absolute top-[114px] left-5 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-[#6b6bf9] text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              Vaccum bot
+            </div>
+
+            <Toggle
+              className="!absolute !left-[99px] !top-6"
+              property1="variant-2"
+            />
+            <img
+              className="w-[42px] h-[46px] absolute top-[58px] left-5"
+              alt="Mask group"
+              src={maskGroup4}
+            />
+          </div>
+
+          <div className="absolute w-[166px] h-[158px] top-[227px] left-[105px] bg-white rounded-[15px]">
+            <div className="top-6 left-[27px] absolute [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              on
+            </div>
+
+            <div className="absolute top-[113px] left-5 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-[#6b6bf9] text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              Air purifier
+            </div>
+
+            <Toggle
+              className="!absolute !left-[107px] !top-6"
+              property1="variant-2"
+            />
+            <img
+              className="absolute w-10 h-10 top-[58px] left-5"
+              alt="Mask group"
+              src={maskGroup5}
+            />
+          </div>
+
+          <div className="absolute w-[166px] h-[158px] top-[405px] left-[297px] bg-white rounded-[15px]">
+            <div className="absolute top-[68px] left-[60px] [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-[#6b6bf9] text-center tracking-[0.16px] text-base leading-[normal] whitespace-nowrap">
+              Add new
+            </div>
+
+            <img
+              className="absolute w-[22px] h-[22px] top-[67px] left-9"
+              alt="Edit plus"
+              src={plus3}
+            />
+          </div>
+
+          <div className="absolute w-[166px] h-[158px] top-[227px] left-[297px] bg-white rounded-[15px]">
+            <Toggle
+              className="!absolute !left-[107px] !top-6"
+              property1="default"
+            />
+            <div className="absolute top-6 left-5 opacity-40 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              off
+            </div>
+
+            <div className="absolute top-[113px] left-5 opacity-40 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              Android TV
+            </div>
+
+            <img
+              className="absolute w-10 h-10 top-[58px] left-5"
+              alt="Mask group"
+              src={maskGroup6}
+            />
+          </div>
+
+          <div className="absolute w-[166px] h-[158px] top-[227px] left-[489px] bg-white rounded-[15px]">
+            <Toggle
+              className="!absolute !left-[107px] !top-6"
+              property1="default"
+            />
+            <div className="absolute top-6 left-5 opacity-40 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              off
+            </div>
+
+            <div className="absolute top-[113px] left-5 opacity-40 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              Weather
+            </div>
+
+            <img
+              className="absolute w-10 h-10 top-[58px] left-5"
+              alt="Mask group"
+              src={maskGroup2}
+            />
+          </div>
+
+          <div className="absolute w-[166px] h-[158px] top-[227px] left-[681px] bg-white rounded-[15px]">
+            <div className="top-6 left-5 absolute [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              on
+            </div>
+
+            <div className="absolute top-[113px] left-5 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-[#6b6bf9] text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              Wifi
+            </div>
+
+            <Toggle
+              className="!absolute !left-[107px] !top-6"
+              property1="variant-2"
+            />
+            <img
+              className="absolute w-10 h-10 top-[58px] left-5"
+              alt="Mask group"
+              src={maskGroup3}
+            />
+          </div>
+
+          <div className="absolute w-[166px] h-[158px] top-[227px] left-[873px] bg-white rounded-[15px]">
+            <img
+              className="w-[39px] h-[39px] absolute top-[58px] left-5"
+              alt="Mask group"
+              src={maskGroup}
+            />
+
+            <div className="top-6 left-5 absolute [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              on
+            </div>
+
+            <div className="absolute top-[113px] left-5 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-[#6b6bf9] text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
+              Lights
+            </div>
+
+            <Toggle
+              className="!absolute !left-[107px] !top-6"
+              property1="variant-2"
+            />
+          </div>
+
+          <div className="absolute w-[59px] h-[23px] top-[178px] left-[229px]">
+            <div className="absolute top-[3px] left-[27px] [font-family:'Roboto-Medium',Helvetica] font-medium text-[#000000] text-base tracking-[0] leading-[normal] whitespace-nowrap">
+              78%
+            </div>
+
+            <img
+              className="absolute w-[23px] h-[23px] top-0 left-0 object-cover"
+              alt="Drop"
+              src={drop}
+            />
+          </div>
+
+          <div className="absolute w-[61px] h-[25px] top-[177px] left-[301px]">
+            <div className="absolute top-1 left-[26px] [font-family:'Roboto-Medium',Helvetica] font-medium text-[#000000] text-base tracking-[0] leading-[normal] whitespace-nowrap">
+              25 C
+            </div>
+
+            <img
+              className="absolute w-[25px] h-[25px] top-0 left-0 object-cover"
+              alt="Thermometer"
+              src={thermometer}
+            />
+          </div>
+
+          <div className="absolute w-[1510px] h-[982px] top-0 left-0">
+            <div className="inline-flex flex-col h-[918px] items-center gap-[38px] pt-[30px] pb-[300px] px-[25px] absolute top-16 left-0 bg-white">
+              <div className="relative w-[25px] h-[25px]">
+                <img
+                  className="absolute w-[27px] h-[27px] -top-px -left-px"
+                  alt="Home"
+                  src={home}
+                />
+              </div>
+
+              <div className="relative w-[29px] h-[30px] opacity-90">
+                <div className="relative h-[30px]">
+                  <Link
+                    className="absolute w-[29px] h-[30px] top-0 left-0 bg-white opacity-80 block"
+                    to="/rooms"
+                  />
+
+                  <div className="absolute w-6 h-[27px] top-0.5 left-[3px]">
+                    <div className="relative h-[27px]">
+                      <div className="absolute w-[19px] h-[27px] top-0 left-0.5 bg-[#000000] rounded-[2px_2px_0px_0px] border-2 border-solid" />
+
+                      <div className="absolute w-6 h-0.5 top-[25px] left-0 bg-[#000000] rounded-[1px]" />
+
+                      <div className="absolute w-1 h-1 top-3 left-[5px] bg-white rounded-sm" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <img
+                className="relative w-7 h-7"
+                alt="Media airplay"
+                src={airplay}
+              />
+
+              <img
+                className="relative w-7 h-7 object-cover"
+                alt="Routine"
+                src={routine}
+              />
+
+              <img
+                className="relative w-7 h-7"
+                alt="User group alt"
+                src={groupAlt}
+              />
+
+              <div className="relative w-[26px] h-[26px] overflow-hidden">
+                <div className="relative h-[22px] top-0.5 rounded border-[2.2px] border-solid border-[#000000]">
+                  <img
+                    className="absolute w-[26px] h-2.5 top-0.5 -left-0.5"
+                    alt="Vector"
+                    src={vector3014}
+                  />
+                </div>
+              </div>
+
+              <img
+                className="relative w-7 h-7"
+                alt="Chart line chart up"
+                src={lineChartUp}
+              />
+
+              <img
+                className="relative w-7 h-7"
+                alt="Basic settings"
+                src={settings}
+              />
+
+              <img
+                className="relative w-[30px] h-[30px]"
+                alt="Bell"
+                src={bell}
+              />
+
+              <div className="relative w-[22.5px] h-[25px] mb-[-30.00px] bg-[url(/peopele.svg)] bg-[100%_100%]" />
+            </div>
+
+            <div className="flex w-[1510px] items-center gap-[23px] pl-6 pr-5 py-3.5 absolute top-0 left-0 bg-white border-b [border-bottom-style:solid] border-[#0000000d]">
+              <div className="relative w-[141.54px] h-[27px]">
+                <div className="absolute w-[22px] h-[26px] top-0 left-0 bg-[url(/union.svg)] bg-[100%_100%]">
+                  <img
+                    className="absolute w-3 h-3 top-3.5 left-0"
+                    alt="Subtract"
+                    src={subtract}
+                  />
+                </div>
+
+                <div className="absolute w-[106px] h-5 top-[7px] left-8">
+                  <div className="absolute w-[53px] top-0 left-0 [font-family:'Spartan-SemiBold',Helvetica] font-semibold text-[#000000] text-[15px] tracking-[0.15px] leading-[normal]">
+                    Zoho
+                  </div>
+
+                  <div className="absolute w-[61px] top-0 left-[45px] opacity-50 [font-family:'Spartan-SemiBold',Helvetica] font-semibold text-[#000000] text-[15px] tracking-[0.15px] leading-[normal]">
+                    Home
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-start gap-2.5 px-2.5 py-0 relative flex-1 grow">
+                <div className="flex w-[496px] h-[38px] items-center pl-3 pr-[5.13px] py-[5.13px] relative bg-system-materialssm-l-thick rounded-[6.42px] border border-solid border-[#0000001a]">
+                  <Search className="!relative !w-[23px] !h-[23px]" />
+                  <div className="inline-flex items-start gap-2.5 pl-[7px] pr-2.5 pt-px pb-0 relative flex-[0_0_auto] opacity-80">
+                    <div className="relative w-fit mt-[-1.00px] [font-family:'Roboto-Medium',Helvetica] font-medium text-label-colorslc-l-secondary text-base tracking-[-0.26px] leading-[14.1px] whitespace-nowrap">
+                      Search
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="inline-flex items-center gap-3 relative flex-[0_0_auto]">
+                <div className="relative w-[34px] h-[34px] rounded-[400px] bg-[url(/tik-tok.svg)] bg-cover bg-[50%_50%]" />
+
+                <div className="relative w-[167px] h-[23px] [font-family:'Lato-SemiBold',Helvetica] font-semibold text-black-40 text-base tracking-[0] leading-[normal]">
+                  Gokul Ravichandren
+                </div>
+
+                <MoreVertical className="!relative !w-6 !h-6" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        black: "var(--black)",
+        "black-40": "var(--black-40)",
+        "darktheme-black-bg": "var(--darktheme-black-bg)",
+        "label-colorslc-l-secondary": "var(--label-colorslc-l-secondary)",
+        lightgrey: "var(--lightgrey)",
+        "system-materialssm-l-thick": "var(--system-materialssm-l-thick)",
+        "white-theme-gray-6": "var(--white-theme-gray-6)",
+        "x303030-black-100": "var(--x303030-black-100)",
+      },
+      fontFamily: {
+        "h2-bold-28": "var(--h2-bold-28-font-family)",
+        "lato-medi-14": "var(--lato-medi-14-font-family)",
+        "lato-reg-12": "var(--lato-reg-12-font-family)",
+      },
+    },
+  },
+  plugins: [],
+};
+
+
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
+
+:root {
+  --black: rgba(0, 0, 0, 1);
+  --black-40: rgba(0, 0, 0, 0.4);
+  --darktheme-black-bg: rgba(32, 32, 32, 1);
+  --h2-bold-28-font-family: "Poppins", Helvetica;
+  --h2-bold-28-font-size: 28px;
+  --h2-bold-28-font-style: normal;
+  --h2-bold-28-font-weight: 700;
+  --h2-bold-28-letter-spacing: 0px;
+  --h2-bold-28-line-height: normal;
+  --label-colorslc-l-secondary: rgba(60, 60, 67, 0.6);
+  --lato-medi-14-font-family: "Lato", Helvetica;
+  --lato-medi-14-font-size: 14px;
+  --lato-medi-14-font-style: normal;
+  --lato-medi-14-font-weight: 500;
+  --lato-medi-14-letter-spacing: 0px;
+  --lato-medi-14-line-height: normal;
+  --lato-reg-12-font-family: "Lato", Helvetica;
+  --lato-reg-12-font-size: 12px;
+  --lato-reg-12-font-style: normal;
+  --lato-reg-12-font-weight: 400;
+  --lato-reg-12-letter-spacing: 0px;
+  --lato-reg-12-line-height: normal;
+  --lightgrey: rgba(178, 178, 178, 1);
+  --system-materialssm-l-thick: rgba(250, 250, 250, 0.93);
+  --white-theme-gray-6: rgba(101, 101, 117, 1);
+  --x303030-black-100: rgba(48, 48, 48, 1);
+}
