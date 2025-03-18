@@ -5,7 +5,7 @@ app = FastAPI()
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    web_socket_handler.add_websocket(websocket)
+    await web_socket_handler.add_websocket(websocket)
     try:
         while True:
             await websocket.receive_text()  

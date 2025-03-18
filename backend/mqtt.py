@@ -9,7 +9,7 @@ load_dotenv()
 # Cấu hình Adafruit IO
 ADAFRUIT_IO_USERNAME = os.getenv("ADAFRUIT_IO_USERNAME")
 ADAFRUIT_IO_KEY = os.getenv("ADAFRUIT_IO_KEY")
-ADAFRUIT_IO_FEED = ["bbc-temperature", "bbc-led"]
+ADAFRUIT_IO_FEED = ["bbc-temperature", "bbc-humidity"]
 
 class MQTTObserver:
     async def update(self, topic: str, message: str):
@@ -53,14 +53,27 @@ class MQTTClient:
 
 class WebSocketHandler(MQTTObserver):
     websockets = set()
+    _last_message = ["0", "0"]
 
-    def add_websocket(self, websocket):
+    async def add_websocket(self, websocket):
         self.websockets.add(websocket)
+        try:
+            # Gửi dữ liệu cũ về client khi mới kết nối
+            await self.update("temperature", self._last_message[0])
+            await self.update("humidity", self._last_message[1])
+        except Exception as e:
+            print(f"Error when adding websocket: {e}")
 
     def remove_websocket(self, websocket):
         self.websockets.remove(websocket)
 
     async def update(self, topic: str, message: str):
+        
+        topic = topic.split("-")[-1]
+        if topic == "temperature":
+            self._last_message[0] = message
+        else:
+            self._last_message[1] = message
         data = {"topic": topic, "message": message}
         data = json.dumps(data)
         print(data)
