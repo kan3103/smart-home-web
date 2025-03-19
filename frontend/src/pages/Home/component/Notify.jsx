@@ -5,7 +5,7 @@ import voiceAssistant from "../../../assets/images/home/voiceAssistant.png";
 import avatar2 from "../../../assets/images/home/avatar2.png";
 
 const Notification = () => (
-    <div className="absolute w-[417px] h-[304px] top-[132px] left-[1067px] bg-white rounded-[15px] overflow-y-auto custom-scrollbar">
+    <div className="flex absolute w-[417px] h-[304px] top-[132px] left-[1067px] bg-white rounded-[15px] overflow-y-auto custom-scrollbar">
         <div className="inline-flex flex-col items-start gap-4 relative top-5 left-[30px]">
             <div className="flex w-[335px] items-center gap-[15px] relative flex-[0_0_auto]">
                 <img

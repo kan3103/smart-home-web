@@ -1,10 +1,10 @@
 import {React} from "react";
-import Card from "../../component/Home/Card.jsx";
+import Card from "../../component/Home/Card";
 // import Lock from "../../component/Home/Lock.jsx";
-import Next from "../../component/Home/Next.jsx";
-import Add from "../../component/Home/Add.jsx";
+import Next from "../../component/Home/Next";
+import Add from "../../component/Home/Add";
 // import DropDown from "../../component/Home/DropDown.jsx";
-import Weather from "../../component/Home/Weather.jsx";
+import Weather from "../../component/Home/Weather";
 import Notify from "../Home/component/Notify"
 import Members from "./component/Members";
 import Chart from "./component/Chart";
@@ -15,12 +15,16 @@ import DeviceSensor from "./component/DeviceSensor";
 import Header from "./component/Header";
 import DeviceControl from "./component/DeviceControl";
 
+import '../../index.css'
+
+// import Upload from "../../component/Upload"
+
 
 export const HomePage = () => {
         return (
-        <div className="bg-[#f3f3f3] flex flex-row justify-center w-full">
+        <div className="bg-container bg-[#f3f3f3] ">
             <div className="bg-[#f3f3f3] w-[1512px] h-[982px]">
-                <div className="relative w-[1510px] h-[982px]">
+                <div className="main-content grid grid-cols-1 md:grid-cols-2 gap-4 p-4" >
 
                     {/*This is the Notify component*/}
                     <Notify/>
@@ -51,7 +55,7 @@ export const HomePage = () => {
                     <Header/>
 
 
-                    <div className="inline-flex flex-col w-[80px] h-[918px] items-center gap-[38px] pt-[30px] pb-[300px] px-[25px] relative z-10 top-16 left-0 bg-white">
+                    <div className="inline-flex flex-col w-[80px] h-[920px] items-center gap-[38px] pt-[30px] pb-[300px] px-[25px] relative z-10 top-12 left-[-16px] bg-white">
                         <Card />
                     </div>
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import {React, useState} from "react";
 import line1 from "../assets/images/loginPage/lineLogin.png";
 import line from "../assets/images/loginPage/lineLogin.png";
 import google from "../assets/images/loginPage/google.png";
@@ -9,10 +9,22 @@ import login0 from "../assets/images/loginPage/login0.png";
 import login3 from "../assets/images/loginPage/login3.png";
 import login4 from "../assets/images/loginPage/login4.png";
 import LoginButton from "../component/Login.jsx";
+import Loader from "../component/Loading";
 
 const Login = () => {
     let email = "Email";
     let pass = "Password";
+
+
+    const [loading, setLoading] = useState(false);
+    const handleLogin = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            // window.location.href = "/";
+        }, 2000);
+    };
+
     return (
         <div className="bg-white flex flex-row justify-center w-full h-screen">
             <div className="bg-white w-full h-full relative overflow-auto">
@@ -93,9 +105,11 @@ const Login = () => {
                 </div>
 
                 <div className="justify-center top-[570px] left-[157px] items-center absolute">
-                        <Link to= "/" >
-                            <LoginButton type={"Login"}></LoginButton>
-                        </Link>
+                    {loading ? <Loader /> : (
+                        <button onClick={handleLogin}>
+                            <LoginButton type={"Login"} />
+                        </button>
+                    )}
                 </div>
 
                 <div className="top-[188px] left-[159px] [font-family:'Roboto-Bold',Helvetica] font-bold absolute text-black text-[28px] tracking-[0.28px] leading-[normal] whitespace-nowrap">
