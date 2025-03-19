@@ -9,7 +9,7 @@ load_dotenv()
 # Cấu hình Adafruit IO
 ADAFRUIT_IO_USERNAME = os.getenv("ADAFRUIT_IO_USERNAME")
 ADAFRUIT_IO_KEY = os.getenv("ADAFRUIT_IO_KEY")
-ADAFRUIT_IO_FEED = ["bbc-temperature", "bbc-humidity"]
+ADAFRUIT_IO_FEED = ["bbc-temperature", "bbc-humidity","bbc-button"]
 
 class MQTTObserver:
     async def update(self, topic: str, message: str):
@@ -46,11 +46,16 @@ class MQTTClient:
         print(f"Received message: {message} from {msg.topic}")
         
         asyncio.run(MQTTClient._instance._broadcast_message(msg.topic, message))
+    
 
     @classmethod
     async def _broadcast_message(cls, topic, message):
         await cls._instance.websockets.update(topic, message)
 
+    @classmethod
+    def send_message(cls, topic, message):
+        cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{topic}", message)
+        print(f"Sent message: {message} to {topic}")
 class WebSocketHandler(MQTTObserver):
     websockets = set()
     _last_message = ["0", "0"]
