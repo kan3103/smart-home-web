@@ -26,7 +26,7 @@ async def send_data(device:int ,data: dict = Body(...)):
     ada_feed = await fetch_device_names(device)
     if ada_feed is None:
         return {"message": f"Device {device} not found"}
-    mqtt_client.send_message("BBC_"+ada_feed.ada_feed, data["value"])
+    mqtt_client.send_message(ada_feed.ada_feed, data["value"])
     
     return {"message": f"Sent {data['value']} to {ada_feed.name}"}
 

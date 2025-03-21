@@ -19,14 +19,17 @@ async def fetch_device_names(id: int):
         ada_feed = result.scalar_one_or_none()  
         return ada_feed 
 
-async def get_devices():
+async def get_devices(ada_feed = None):
     async with SessionLocal() as session:
+        
         result = await session.execute(
             select(Device)
+        ) if ada_feed is None else await session.execute(
+            select(Device).where(Device.ada_feed == ada_feed)
         )
-        devices = result.scalars().all()
-        return devices
-    
+        device = result.scalar_one_or_none()
+        return device
+
     
 async def get_ada_feeds():
     async with SessionLocal() as session:
