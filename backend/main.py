@@ -1,8 +1,6 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket , Body
 from mqtt import web_socket_handler, mqtt_client
-import asyncio
-from pydantic import BaseModel
-from database import fetch_device_names
+from database import fetch_device_names, add_device , get_devices
 app = FastAPI()
 
 
@@ -23,20 +21,31 @@ def read_root():
     return {"message": "WebSocket and MQTT server is running!"}
 
 
-class DataModel(BaseModel):
-    value: str  
-
 @app.post("/send/{device}")
-async def send_data(device:int ,data:DataModel):
+async def send_data(device:int ,data: dict = Body(...)):
     ada_feed = await fetch_device_names(device)
-    print(ada_feed)
-    mqtt_client.send_message("BBC_"+ada_feed, data.value)
-    return {"message": f"Sent {data.value} to bbc-temperature"}
-
-@app.get("/member/")
-async def get_member():
+    if ada_feed is None:
+        return {"message": f"Device {device} not found"}
+    mqtt_client.send_message("BBC_"+ada_feed.ada_feed, data["value"])
     
-    return {"message": "Hello member!"}
+    return {"message": f"Sent {data['value']} to {ada_feed.name}"}
+
+@app.get("/device/")
+async def get_device():
+    devices = await get_devices()
+    for device in devices:
+        await mqtt_client.getdata("BBC_"+device.ada_feed)
+    return(devices)
+
+@app.post("/device/")
+async def add_device_new(device: dict = Body(...)):
+    await add_device(device["name"], device["ada_feed"],device["type"])
+    print(device)
+    # await save_controlled_device(device)
+    return {"message": "Device added", "device": device}
+
+
+
 
 
 

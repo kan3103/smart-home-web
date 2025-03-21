@@ -3,13 +3,14 @@ import json
 import paho.mqtt.client as mqtt
 import os
 from dotenv import load_dotenv
-
+from database import save_temp_humi, get_ada_feeds
+main_loop = asyncio.get_event_loop()
 # Load biến môi trường từ file .env
 load_dotenv()
 # Cấu hình Adafruit IO
 ADAFRUIT_IO_USERNAME = os.getenv("ADAFRUIT_IO_USERNAME")
 ADAFRUIT_IO_KEY = os.getenv("ADAFRUIT_IO_KEY")
-ADAFRUIT_IO_FEED = ["bbc-temperature", "bbc-humidity","bbc-button"]
+ADAFRUIT_IO_FEED = ["bbc-temperature", "bbc-humidity","bbc-button","bbc_led"]
 
 class MQTTObserver:
     async def update(self, topic: str, message: str):
@@ -20,6 +21,7 @@ class MQTTClient:
 
     def __init__(self, websockets):
         self.websockets = websockets
+        
 
     def __new__(cls, websockets):
         if cls._instance is None:
@@ -36,26 +38,59 @@ class MQTTClient:
     @staticmethod
     def _on_connect(client, userdata, flags, rc):
         print("Connected to Adafruit IO with result code", rc)
-        for feed in ADAFRUIT_IO_FEED:
-            client.subscribe(f"{ADAFRUIT_IO_USERNAME}/feeds/{feed}")
-            print(f"Subscribed to {feed}")
+        asyncio.run_coroutine_threadsafe(
+            MQTTClient._load_data(),
+            main_loop
+        )
+        
 
     @staticmethod
     def _on_message(client, userdata, msg):
         message = msg.payload.decode()
-        print(f"Received message: {message} from {msg.topic}")
+        print(f"Received message: {message} from {msg.topic}") 
+        asyncio.run_coroutine_threadsafe(
+            MQTTClient._broadcast_message(msg.topic, message),
+            main_loop
+        )
         
-        asyncio.run(MQTTClient._instance._broadcast_message(msg.topic, message))
-    
-
+    @classmethod
+    async def _load_data(cls):
+        feeds    = await get_ada_feeds()
+        for feed in feeds:
+            cls._instance.client.subscribe(f"{ADAFRUIT_IO_USERNAME}/feeds/{feed}")
+            cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{feed}" + "/get", "")
+            print(f"Subscribed to {feed}")
+    @classmethod
+    async def getdata(cls,topic):
+        cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{topic}" + "/get", "")
+        print(f"Sent message: {topic} to {topic}")
+        
     @classmethod
     async def _broadcast_message(cls, topic, message):
-        await cls._instance.websockets.update(topic, message)
+        for ws in cls._instance.websockets:
+            await ws.update(topic, message)
+
 
     @classmethod
     def send_message(cls, topic, message):
         cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{topic}", message)
         print(f"Sent message: {message} to {topic}")
+        
+class FeedHandler:
+    def __init__(self, feed_name, mqtt_client):
+        self.feed_name = feed_name
+        self.mqtt_client = mqtt_client
+        self.mqtt_client.register_feed(feed_name, self)
+
+    def handle_message(self, message):
+        print(f"Feed {self.feed_name} received: {message}")
+
+    def send_data(self, value):
+        self.mqtt_client.publish(self.feed_name, value)
+        
+        
+        
+        
 class WebSocketHandler(MQTTObserver):
     websockets = set()
     _last_message = ["0", "0"]
@@ -73,7 +108,6 @@ class WebSocketHandler(MQTTObserver):
         self.websockets.remove(websocket)
 
     async def update(self, topic: str, message: str):
-        
         topic = topic.split("-")[-1]
         if topic == "temperature":
             self._last_message[0] = message
@@ -86,5 +120,13 @@ class WebSocketHandler(MQTTObserver):
             await websocket.send_text(data) 
         print(f"[WebSocket] Sent {topic}: {message} to frontend.")
 
+class DatabaseHandler(MQTTObserver):
+    async def update(self, topic: str, message: str):
+        topic = topic.split("-")[-1]
+        if topic == "temperature" or topic == "humidity":
+            await save_temp_humi(topic, message)
+            print(f"[Database] Saved {topic}: {message} to database.")
+        
+
 web_socket_handler = WebSocketHandler()
-mqtt_client = MQTTClient(web_socket_handler)
+mqtt_client = MQTTClient([web_socket_handler, DatabaseHandler()])
