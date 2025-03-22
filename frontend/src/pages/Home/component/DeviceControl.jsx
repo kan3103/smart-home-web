@@ -1,7 +1,7 @@
 import light from "../../../assets/images/icon/light.png";
 import Switch from "../../../component/Home/Switch";
 import {React} from "react";
-import wifi from "../../../assets/images/icon/wifi.png";
+import fan from "../../../assets/images/icon/fan.png";
 
 let isWifiState = true;
 let wifiState = isWifiState? "ON": "OFF";
@@ -31,9 +31,9 @@ const DeviceControl = () => (
 
         <div className="absolute w-[166px] h-[158px] top-[615px] left-[316px] bg-white rounded-[15px]">
             <img
-                className="absolute w-[39px] h-[39px] top-[58px] left-5"
+                className="absolute w-[60px] h-[60px] top-[47px] left-1"
                 alt="Mask group"
-                src={wifi}
+                src={fan}
             />
 
             <div className="left-5 absolute top-6 [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-black text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
@@ -41,7 +41,7 @@ const DeviceControl = () => (
             </div>
 
             <div className="left-5 absolute top-[113px] [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-[#6b6bf9] text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
-                Wifi
+                Fan 1
             </div>
 
             <div className="absolute left-[107px] top-6">

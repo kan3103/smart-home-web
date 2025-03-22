@@ -2,7 +2,6 @@ import {React} from "react";
 import Card from "../../component/Home/Card";
 // import Lock from "../../component/Home/Lock.jsx";
 import Next from "../../component/Home/Next";
-import Add from "../../component/Home/Add";
 // import DropDown from "../../component/Home/DropDown.jsx";
 import Weather from "../../component/Home/Weather";
 import Notify from "../Home/component/Notify"
@@ -69,7 +68,7 @@ export const HomePage = () => {
                         <SlideBar/>
 
                         <div className="relative z-10 w-[105px] h-[30px] top-[347px] left-[1140px]">
-                            <Add/>
+                            {/*<Add/>*/}
                         </div>
 
                         {/*<div className="absolute w-[230px] h-[643px] top-[387px] left-[206px] bg-[#d9d9d9] rounded-[15px] rotate-[90.00deg]" >*/}
@@ -165,7 +164,7 @@ export const HomePage = () => {
                     {/*This is the DeviceControl component*/}
                     <DeviceControl/>
 
-                    <div className="absolute w-[166px] h-[158px] top-[680px] left-[650px] rounded-[15px]">
+                    <div className="absolute w-[166px] h-[158px] top-[770px] left-[650px] rounded-[15px]">
                         <Next/>
                     </div>
                 </div>

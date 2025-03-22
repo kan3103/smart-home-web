@@ -2,6 +2,8 @@ import React from "react";
 import login2 from "../../../assets/images/loginPage/login2.png";
 import hostAvatar from "../../../assets/images/home/hostAvatar.png";
 
+import Search from  "../../../component/Home/Search"
+
 const Header = () => (
     <div
         className="flex w-[1510px] h-[66px] items-center gap-[23px] pl-6 pr-5 py-3.5 absolute top-0 left-0 bg-white border-b [border-bottom-style:solid] border-[#0000000d]">
@@ -27,20 +29,23 @@ const Header = () => (
             </div>
 
             <div
-                className="flex w-[496px] h-[38px] top-[-3px] left-[200px] items-center pl-3 pr-[5.13px] py-[5.13px] relative bg-system-materialssm-l-thick rounded-[6.42px] border border-solid border-[#0000001a]">
-                <div className="relative w-[16px] h-[16px]">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="7" cy="7" r="6" stroke="black" strokeWidth="2"/>
-                        <line x1="11" y1="10" x2="15" y2="15" stroke="black" strokeWidth="2"/>
-                    </svg>
-                </div>
-                <div
-                    className="inline-flex items-start gap-2.5 pl-[7px] pr-2.5 pt-px pb-0 relative flex-[0_0_auto] opacity-80">
-                    <div
-                        className="relative w-fit mt-[-1.00px] [font-family:'Roboto-Medium',Helvetica] font-medium text-label-colorslc-l-secondary text-base tracking-[-0.26px] leading-[14.1px] whitespace-nowrap">
-                        Search
-                    </div>
-                </div>
+                className="flex w-[496px] h-[38px] top-[-3px] left-[180px] items-center pl-3 pr-[5.13px] py-[5.13px] relative bg-system-materialssm-l-thick ">
+                {/*<div className="relative w-[16px] h-[16px]">*/}
+                {/*    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+                {/*        <circle cx="7" cy="7" r="6" stroke="black" strokeWidth="2"/>*/}
+                {/*        <line x1="11" y1="10" x2="15" y2="15" stroke="black" strokeWidth="2"/>*/}
+                {/*    </svg>*/}
+                {/*</div>*/}
+                {/*<div*/}
+                {/*    className="inline-flex items-start gap-2.5 pl-[7px] pr-2.5 pt-px pb-0 relative flex-[0_0_auto] opacity-80">*/}
+                {/*    <div*/}
+                {/*        className="relative w-fit mt-[-1.00px] [font-family:'Roboto-Medium',Helvetica] font-medium text-label-colorslc-l-secondary text-base tracking-[-0.26px] leading-[14.1px] whitespace-nowrap">*/}
+                {/*        Search*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+
+                <Search/>
+
             </div>
 
             <div className="inline-flex items-center gap-3 relative flex-[0_0_auto]">
