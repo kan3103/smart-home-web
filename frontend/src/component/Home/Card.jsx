@@ -13,29 +13,6 @@ const Card = () => {
 
             <div className="navigation-card">
                 <a href="#" className="tab">
-                    <svg width={104} height={100} viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="21.5" y="3.5" width={60} height={60} rx={30} stroke="black" strokeWidth={7} />
-                        <g clipPath="url(#clip0_41_27)">
-                            <mask id="mask0_41_27" style={{maskType: 'luminance'}} maskUnits="userSpaceOnUse" x={0} y={61} width={104} height={52}>
-                                <path d="M0 113C0 84.2812 23.4071 61 52.1259 61C80.706 61 104 84.4199 104 113H0Z" fill="white" />
-                            </mask>
-                            <g mask="url(#mask0_41_27)">
-                                <path d="M-7 113C-7 80.4152 19.4152 54 52 54H52.2512C84.6973 54 111 80.3027 111 112.749H97C97 88.0347 76.9653 68 52.2512 68H52C27.1472 68 7 88.1472 7 113H-7ZM-7 113C-7 80.4152 19.4152 54 52 54V68C27.1472 68 7 88.1472 7 113H-7ZM52.2512 54C84.6973 54 111 80.3027 111 112.749V113H97V112.749C97 88.0347 76.9653 68 52.2512 68V54Z" fill="black" />
-                            </g>
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_41_27">
-                                <rect width={104} height={39} fill="white" transform="translate(0 61)" />
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </a>
-            </div>
-
-
-
-            <div className="navigation-card">
-                <a href="#" className="tab">
                     <div className="relative w-[25px] h-[25px] opacity-90 ">
                         <div className="relative h-[30px]">
                             <div className="absolute w-6 h-[27px] top-0 left-[0px]">
@@ -64,13 +41,6 @@ const Card = () => {
                 </a>
             </div>
 
-            <div className= "navigation-card" >
-                <a href="#" className="tab">
-                    <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 20 20" height={20} fill="none" className="svg-icon"><g strokeWidth="1.5" strokeLinecap="round" stroke="#000000"><circle r="2.5" cy={10} cx={10} /><path fillRule="evenodd" d="m8.39079 2.80235c.53842-1.51424 2.67991-1.51424 3.21831-.00001.3392.95358 1.4284 1.40477 2.3425.97027 1.4514-.68995 2.9657.82427 2.2758 2.27575-.4345.91407.0166 2.00334.9702 2.34248 1.5143.53842 1.5143 2.67996 0 3.21836-.9536.3391-1.4047 1.4284-.9702 2.3425.6899 1.4514-.8244 2.9656-2.2758 2.2757-.9141-.4345-2.0033.0167-2.3425.9703-.5384 1.5142-2.67989 1.5142-3.21831 0-.33914-.9536-1.4284-1.4048-2.34247-.9703-1.45148.6899-2.96571-.8243-2.27575-2.2757.43449-.9141-.01669-2.0034-.97028-2.3425-1.51422-.5384-1.51422-2.67994.00001-3.21836.95358-.33914 1.40476-1.42841.97027-2.34248-.68996-1.45148.82427-2.9657 2.27575-2.27575.91407.4345 2.00333-.01669 2.34247-.97026z" clipRule="evenodd" /></g></svg>
-                    <span className="lable"></span>
-                </a>
-            </div>
-
             <div className="navigation-card">
                 <a href="#" className="tab">
                         <input id="bookmark" type="checkbox" />
@@ -89,12 +59,6 @@ const Card = () => {
                 </a>
             </div>
 
-            <div className="navigation-card">
-                <a href="#" className="tab">
-                    <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 20 20" height={20} fill="none" className="svg-icon"><g strokeWidth="1.5" strokeLinecap="round" stroke="#000000"><circle r="2.5" cy={10} cx={10} /><path fillRule="evenodd" d="m8.39079 2.80235c.53842-1.51424 2.67991-1.51424 3.21831-.00001.3392.95358 1.4284 1.40477 2.3425.97027 1.4514-.68995 2.9657.82427 2.2758 2.27575-.4345.91407.0166 2.00334.9702 2.34248 1.5143.53842 1.5143 2.67996 0 3.21836-.9536.3391-1.4047 1.4284-.9702 2.3425.6899 1.4514-.8244 2.9656-2.2758 2.2757-.9141-.4345-2.0033.0167-2.3425.9703-.5384 1.5142-2.67989 1.5142-3.21831 0-.33914-.9536-1.4284-1.4048-2.34247-.9703-1.45148.6899-2.96571-.8243-2.27575-2.2757.43449-.9141-.01669-2.0034-.97028-2.3425-1.51422-.5384-1.51422-2.67994.00001-3.21836.95358-.33914 1.40476-1.42841.97027-2.34248-.68996-1.45148.82427-2.9657 2.27575-2.27575.91407.4345 2.00333-.01669 2.34247-.97026z" clipRule="evenodd" /></g></svg>
-                    <span className="lable"></span>
-                </a>
-            </div>
 
             <div className= "navigation-card" >
                 <a href="#" className="tab">
@@ -123,12 +87,42 @@ const Card = () => {
                     </svg>
                 </a>
             </div>
+
+            <div className="navigation-card">
+                <a href="#" className="tab">
+                    <svg width={104} height={100} viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="21.5" y="3.5" width={60} height={60} rx={30} stroke="black" strokeWidth={7} />
+                        <g clipPath="url(#clip0_41_27)">
+                            <mask id="mask0_41_27" style={{maskType: 'luminance'}} maskUnits="userSpaceOnUse" x={0} y={61} width={104} height={52}>
+                                <path d="M0 113C0 84.2812 23.4071 61 52.1259 61C80.706 61 104 84.4199 104 113H0Z" fill="white" />
+                            </mask>
+                            <g mask="url(#mask0_41_27)">
+                                <path d="M-7 113C-7 80.4152 19.4152 54 52 54H52.2512C84.6973 54 111 80.3027 111 112.749H97C97 88.0347 76.9653 68 52.2512 68H52C27.1472 68 7 88.1472 7 113H-7ZM-7 113C-7 80.4152 19.4152 54 52 54V68C27.1472 68 7 88.1472 7 113H-7ZM52.2512 54C84.6973 54 111 80.3027 111 112.749V113H97V112.749C97 88.0347 76.9653 68 52.2512 68V54Z" fill="black" />
+                            </g>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_41_27">
+                                <rect width={104} height={39} fill="white" transform="translate(0 61)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </a>
+            </div>
+
+            <div className="navigation-card">
+                <a href="#" className="tab">
+                    <svg xmlns="http://www.w3.org/2000/svg" width={20} viewBox="0 0 20 20" height={20} fill="none" className="svg-icon"><g strokeWidth="1.5" strokeLinecap="round" stroke="#000000"><circle r="2.5" cy={10} cx={10} /><path fillRule="evenodd" d="m8.39079 2.80235c.53842-1.51424 2.67991-1.51424 3.21831-.00001.3392.95358 1.4284 1.40477 2.3425.97027 1.4514-.68995 2.9657.82427 2.2758 2.27575-.4345.91407.0166 2.00334.9702 2.34248 1.5143.53842 1.5143 2.67996 0 3.21836-.9536.3391-1.4047 1.4284-.9702 2.3425.6899 1.4514-.8244 2.9656-2.2758 2.2757-.9141-.4345-2.0033.0167-2.3425.9703-.5384 1.5142-2.67989 1.5142-3.21831 0-.33914-.9536-1.4284-1.4048-2.34247-.9703-1.45148.6899-2.96571-.8243-2.27575-2.2757.43449-.9141-.01669-2.0034-.97028-2.3425-1.51422-.5384-1.51422-2.67994.00001-3.21836.95358-.33914 1.40476-1.42841.97027-2.34248-.68996-1.45148.82427-2.9657 2.27575-2.27575.91407.4345 2.00333-.01669 2.34247-.97026z" clipRule="evenodd" /></g></svg>
+                    <span className="lable"></span>
+                </a>
+            </div>
+
         </StyledWrapper>
 
     );
 }
 
 const StyledWrapper = styled.div`
+    
     #bookmark[type="checkbox"] {
         position: absolute;
         opacity: 0;
@@ -254,6 +248,8 @@ const StyledWrapper = styled.div`
     }
 
     .navigation-card {
+        margin: 50px;
+        padding: 0;
         width: fit-content;
         height: fit-content;
         display: flex;
@@ -261,9 +257,10 @@ const StyledWrapper = styled.div`
         justify-content: center;
         gap: 30px;
         background-color: rgb(255, 255, 255);
-        padding: 10px 10px;
+        //padding: 10px 10px;
         border-radius: 0;
         position: relative;
+        rotate: 90deg;
     }
     .tab {
         display: flex;
@@ -282,6 +279,52 @@ const StyledWrapper = styled.div`
     .tab:hover {
         background-color: rgb(223, 223, 223);
     }
+
+    /* Responsive: Ẩn bớt các mục khi màn hình nhỏ hoặc zoom lớn */
+
+    @media (max-width: 1000px) {
+        .navigation-card:nth-child(n+7) { /* Ẩn từ mục thứ 5 trở đi */
+            display: none;
+        }
+        gap: 15px; /* Giảm khoảng cách khi màn hình nhỏ */
+    }
+
+    @media (max-width: 900px) {
+        .navigation-card:nth-child(n+6) { /* Ẩn từ mục thứ 5 trở đi */
+            display: none;
+        }
+        gap: 15px; /* Giảm khoảng cách khi màn hình nhỏ */
+    }
+
+
+    @media (max-width: 800px) {
+        .navigation-card:nth-child(n+5) { /* Ẩn từ mục thứ 5 trở đi */
+            display: none;
+        }
+        gap: 15px; /* Giảm khoảng cách khi màn hình nhỏ */
+    }
+
+    @media (max-width: 600px) {
+        .navigation-card:nth-child(n+4) { /* Ẩn từ mục thứ 4 trở đi */
+            display: none;
+        }
+        gap: 10px; /* Giảm thêm khoảng cách */
+    }
+
+    @media (max-width: 500px) {
+        .navigation-card:nth-child(n+3) { /* Ẩn từ mục thứ 3 trở đi */
+            display: none;
+        }
+        gap: 5px; /* Giảm tối đa khoảng cách */
+    }
+
+    @media (max-width: 400px) {
+        .navigation-card:nth-child(n+2) { /* Ẩn từ mục thứ 3 trở đi */
+            display: none;
+        }
+        gap: 0px; /* Giảm tối đa khoảng cách */
+    }
+    
     .search-bar {
         position: absolute;
         right: 0;
