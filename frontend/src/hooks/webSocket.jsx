@@ -3,21 +3,36 @@ import { useEffect, useState } from "react";
 const Home_Temp = () => {
     const [temperature, setTemperature] = useState(null);
     const [humidity, setHumidity] = useState(null);
+    const [devices, setDevices] = useState([]);
+
     useEffect(() => {
-        const socket = new WebSocket("ws://10.230.96.48:8000/ws");
+        const socket = new WebSocket("ws://192.168.10.28:8000/ws");
 
         socket.onopen = () => {
             console.log("WebSocket Connected");
         };
 
         socket.onmessage = (event) => {
-            const data = JSON.parse(event.data); // Chuyển chuỗi JSON thành object
+            const data = JSON.parse(event.data);
+            
             if (data.topic === "temperature") {
-                console.log(data.message);
+                console.log("Temperature:", data.message);
                 setTemperature(data.message);
             } else if (data.topic === "humidity") {
-                console.log(data.message);
+                console.log("Humidity:", data.message);
                 setHumidity(data.message);
+            } else {
+                setDevices((prevDevices) => {
+                    const existingDevice = prevDevices.find((d) => d.id === data.id);
+                    if (existingDevice) {
+                        return prevDevices.map((device) =>
+                            device.id === data.id ? { ...device, status: data.status } : device
+                        );
+                    } else {
+                        return [...prevDevices, data];
+                    }
+                });
+                console.log("Devices:", devices);
             }
         };
 
@@ -34,7 +49,7 @@ const Home_Temp = () => {
         };
     }, []);
 
-    return [temperature, humidity];
+    return [temperature, humidity, devices];
 };
 
 export default Home_Temp;

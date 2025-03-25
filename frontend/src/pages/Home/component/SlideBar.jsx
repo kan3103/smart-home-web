@@ -1,63 +1,38 @@
+import { useState } from "react";
 import home1 from "../../../assets/images/home/home1.png";
 import lock from "../../../assets/images/icon/lock.png";
 import unlock from "../../../assets/images/icon/unlock.png";
-import {React, useState} from "react";
 
 const SlideBar = () => {
     const [isLocked, setIsLocked] = useState(true);
 
-    const handleButtonClick = () => {
-        setIsLocked(!isLocked);
-    };
-
-return (
-        <div className="absolute w-[906px] h-[200px] top-[-15px] left-[-5px] bg-white rounded-[15px]">
-            <div
-                className="absolute top-6 left-[25px] [font-family:'Roboto-Bold',Helvetica] font-bold text-[#000000] text-[22px] tracking-[0.22px] leading-[normal] whitespace-nowrap">
-                Hello, Host!
-            </div>
-
-            <p className="absolute top-[62px] left-[25px] opacity-40 [font-family:'Roboto-Medium',Helvetica] font-medium text-[#000000] text-sm tracking-[0.14px] leading-[normal] whitespace-nowrap">
-                Welcome home, air quality is good and Fresh. Take a walk and have
-                coffee.
-            </p>
-
-            <img
-                className="absolute w-[197px] h-[156px] top-[26px] left-[625px]"
-                alt="Tech life"
-                src={home1}
-            />
-
-            <div
-                className="absolute top-[130px] left-[65px] opacity-50 [font-family:'Roboto-Bold',Helvetica] font-bold text-[#000000] text-sm tracking-[0.14px] leading-[normal] whitespace-nowrap transition-all duration-500  ">
-                Your Door is {isLocked ? "Locked" : "Unlock"}!
-            </div>
-
-            <div
-                className="flex w-[180px] h-[39px] items-center justify-center gap-1.5 absolute top-[120px] left-[280px] bg-[#6b6bf9] rounded-lg border-2 border-solid border-[#0000004c] transition-transform transform hover:scale-105 active:scale-95"
-                onClick={handleButtonClick}>
-                <img
-                    className="relative w-4 h-4"
-                    alt="Mask group"
-                    src={isLocked ? lock : unlock}
-                />
-                <div className="inline-flex items-start gap-2.5 pt-3.5 pb-2.5 px-0 relative flex-[0_0_auto]">
-                    <div
-                        className="relative w-fit mt-[-1.00px] [font-family:'Roboto-Bold',Helvetica] font-bold text-[#ffffff] text-xs tracking-[0] leading-[normal] whitespace-nowrap">
-                        {isLocked ? "Locked" : "Unlock"}
-                    </div>
+    return (
+        <div className="w-full bg-white rounded-[15px] p-6 shadow-md flex justify-between items-center relative">
+            {/* Phần Chào Mừng */}
+            <div>
+                <h2 className="text-xl font-bold">Hello, Host!</h2>
+                <p className="text-sm text-gray-500 mt-2">
+                    Welcome home, air quality is good and fresh. Take a walk and have a coffee.
+                </p>
+                <div className="mt-4 flex items-center gap-2">
+                    <span className="text-sm font-semibold">
+                        Your Door is <span className={isLocked ? "text-red-500" : "text-green-500"}>{isLocked ? "Locked" : "Unlocked"}!</span>
+                    </span>
                 </div>
+                {/* Nút khóa/mở khóa */}
+                <button 
+                    onClick={() => setIsLocked(!isLocked)}
+                    className="mt-2 flex items-center gap-2 px-4 py-2 bg-[#6b6bf9] text-white font-bold rounded-lg border border-black transition-transform transform hover:scale-105 active:scale-95"
+                >
+                    <img className="w-4 h-4" src={isLocked ? lock : unlock} alt="Lock Icon" />
+                    {isLocked ? "Locked" : "Unlocked"}
+                </button>
             </div>
 
-            <div className="absolute w-[15px] h-[21px] top-[125px] left-[40px]">
-                <div className="relative w-[17px] h-[23px] -top-px -left-px">
-                    <div
-                        className="absolute w-[17px] h-[21px] top-0 left-0 bg-white border-[1.7px] border-solid border-[#808080]"/>
-
-                    <div className="absolute w-[3px] h-[3px] top-2.5 left-[7px] bg-[#808080] rounded-[1.5px]"/>
-                </div>
-            </div>
+            {/* Hình ảnh ngôi nhà */}
+            <img className="w-[180px] h-[140px]" src={home1} alt="Home" />
         </div>
     );
-}
+};
+
 export default SlideBar;

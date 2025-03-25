@@ -16,13 +16,22 @@ const ChangeUnit = () => {
 }
 
 const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+
   .toggle-button-cover {
-    display: table-cell;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 150px;
     height: 140px;
     box-sizing: border-box;
   }
+
+  
 
   .button-cover {
     height: 100px;
@@ -56,11 +65,12 @@ const StyledWrapper = styled.div`
 
   .button {
     position: relative;
-    top: 50%;
-    width: 74px;
-    height: 36px;
-    margin: -20px auto 0 auto;
+    width: 50%;
+    height: 25%;
     overflow: hidden;
+    margin: 10px;
+    display: flex;
+    align-items: center;
   }
 
   .checkbox {

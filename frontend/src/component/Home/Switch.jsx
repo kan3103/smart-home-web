@@ -35,8 +35,8 @@ const StyledWrapper = styled.div`
         align-items: center;
         justify-content: center;
         position: relative;
-        width: 50px;
-        height: 30px;
+        width: 40px;
+        height: 25px;
         background-color: rgb(82, 82, 82);
         border-radius: 20px;
         cursor: pointer;
@@ -69,7 +69,7 @@ const StyledWrapper = styled.div`
 
     /* Nút tròn di chuyển khi bật */
     input[type="checkbox"]:checked + .toggleSwitch::after {
-        transform: translateX(100%);
+        transform: translateX(200%);
         transition-duration: .2s;
         background-color: white;
     }

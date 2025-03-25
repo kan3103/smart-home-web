@@ -1,47 +1,111 @@
+import React from "react";
+import styled from "styled-components";
 import theme from "../../../assets/images/home/theme.png";
 import repair from "../../../assets/images/icon/repair.png";
-import {React} from "react";
 
 const HelpWidget = () => (
-    <div className="absolute w-56 h-[200px] top-[230px] left-[670px]">
-        <div className="relative w-[300px] h-[263px] top-[-7px] left-[-27px] bg-[100%_100%]">
-            <img
-                className="absolute w-[290px] h-[200px] top-[35px] left-[0px]"
-                alt="Theme"
-                src={theme}
-            />
-            <div className="absolute top-[80px] left-[60px] [font-family:'Roboto-SemiBold',Helvetica] font-semibold text-white text-[22px] tracking-[-0.44px] leading-[normal] whitespace-nowrap">
-                Need help?
+    <StyledWrapper>
+        <div className="help-container">
+            <img className="theme-image" alt="Theme" src={theme} />
+            <div className="text-content">
+                <div className="help-text">Need help?</div>
+                <p className="help-description">
+                    Contact our highly trained<br />
+                    personnel for help
+                </p>
             </div>
-
-            <p className="absolute top-[115px] left-[60px] opacity-80 [font-family:'Roboto-Regular',Helvetica] font-normal text-white text-sm tracking-[-0.39px] leading-[normal]">
-                Contact our highly trained
-                <br />
-                personal for help
-            </p>
-
-            <div className="absolute w-44 h-[37px] top-[170px] left-[57px] bg-white rounded-lg shadow-[0px_2px_4px_-1px_#00000012,0px_4px_7px_-1px_#0000001c]">
-                <div className="absolute top-[11px] left-[43px] opacity-80 [font-family:'Roboto-Bold',Helvetica] font-bold text-[#252f40] text-[13px] text-center tracking-[-0.33px] leading-[normal] whitespace-nowrap">
-                    Contact Host
-                </div>
-            </div>
-
-            <div className="absolute w-9 h-9 top-[55px] left-[210px]">
-                <div className="relative h-9">
-                    <div className="absolute w-9 h-9 top-0 left-0">
-                        <div className="relative w-[38px] h-[38px] -top-px -left-px bg-white rounded-md shadow-[0px_2px_4px_-1px_#00000012,0px_4px_6px_-1px_#0000001f]">
-                        </div>
-                    </div>
-
-                    <img
-                        className="absolute w-[22px] h-[22px] top-[7px] left-[7px] object-cover"
-                        alt="Repair tool"
-                        src={repair}
-                    />
-                </div>
+            <div className="contact-button">Contact Host</div>
+            <div className="repair-icon-container">
+                <div className="repair-background" />
+                <img className="repair-icon" alt="Repair tool" src={repair} />
             </div>
         </div>
-    </div>
+    </StyledWrapper>
 );
+
+const StyledWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  
+  .help-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    background-size: cover;
+    text-align: center;
+  }
+
+  .theme-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .text-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+
+  .help-text {
+    font-family: 'Roboto-SemiBold', Helvetica;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .help-description {
+    font-family: 'Roboto-Regular', Helvetica;
+    font-size: 14px;
+    color: white;
+    opacity: 0.8;
+    margin-top: 5px;
+  }
+
+  .contact-button {
+    width: 80%;
+    max-width: 200px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.12), 0px 4px 7px -1px rgba(0, 0, 0, 0.1);
+    color: #252f40;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+
+  .repair-icon-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .repair-background {
+    width: 38px;
+    height: 38px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.12), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .repair-icon {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+  }
+`;
 
 export default HelpWidget;

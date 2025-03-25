@@ -1,61 +1,39 @@
-import temp from "../../../assets/images/icon/temp.png";
+import React, { useState, useMemo } from "react";
 import ChangeUnit from "../../../component/Home/ChangeUnit";
-import humid from "../../../assets/images/icon/humid.png";
-import { React, useState, useEffect } from "react";
 import Home_Temp from "../../../hooks/webSocket";
-
-const DisplayInfo = () => {
-    const [temperature, humidity] = Home_Temp();
-    return { temperature, humidity };
-};
+import tempIcon from "../../../assets/images/icon/temp.png";
+import humidIcon from "../../../assets/images/icon/humid.png";
 
 const DeviceSensor = () => {
-    const { temperature, humidity } = DisplayInfo();
+    const [temperature, humidity] = Home_Temp();
     const [isCelsius, setIsCelsius] = useState(true);
-    const [displayTemp, setDisplayTemp] = useState(temperature);
 
-    useEffect(() => {
-        const convertedTemp = isCelsius
-            ? ((temperature - 32) * 5) / 9
-            : (temperature * 9) / 5 + 32;
-        setDisplayTemp(convertedTemp.toFixed(1));
-    }, [isCelsius, temperature]);
+    const displayTemp = useMemo(() => 
+        isCelsius ? temperature : (temperature * 9) / 5 + 32, 
+        [isCelsius, temperature]
+    );
 
     const handleUnitChange = () => setIsCelsius(!isCelsius);
 
+    const sensors = [
+        { id: 1, name: "Temperature", value: `${displayTemp}°${isCelsius ? "C" : "F"}`, color: "#ff0000", icon: tempIcon },
+        { id: 2, name: "Humidity", value: `${humidity}%`, color: "#6b6bf9", icon: humidIcon },
+    ];
+
     return (
-        <div className="absolute w-[650px] h-[250px] top-[215px] left-0 bg-gradient-to-b from-sky-500 rounded-[15px] transition-all duration-500">
-            <img
-                className="absolute w-[78px] h-[78px] top-[40px] left-[165px]"
-                alt="Temperature Icon"
-                src={temp}
-            />
-
-            <div className="left-[160px] absolute top-[165px] font-semibold text-black text-3xl tracking-[0.18px] leading-[normal] whitespace-nowrap transition-all duration-500">
-                {displayTemp}°{isCelsius ? "C" : "F"}
+        <div className="relative w-full bg-gradient-to-b from-sky-500 rounded-[15px] p-4 shadow-md flex flex-wrap justify-around items-center">
+            <div className="absolute top-0 left-0 p-2 flex items-center w-auto min-w-[50px] max-w-[150px]">
+                <div onClick={handleUnitChange} className="cursor-pointer w-full">
+                    <ChangeUnit alt="SwitchTog" property1="variant-2" isCelsius={isCelsius} />
+                </div>
             </div>
-
-            <div className="left-[155px] absolute top-[130px] font-semibold text-[#ff0000] text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
-                Temperature
-            </div>
-
-            <div className="absolute left-[-30px] top-[-30px]" onClick={handleUnitChange}>
-                <ChangeUnit alt="SwitchTog" property1="variant-2" isCelsius={isCelsius} />
-            </div>
-
-            <img
-                className="absolute w-[78px] h-[78px] top-[40px] left-[390px]"
-                alt="Humidity Icon"
-                src={humid}
-            />
-
-            <div className="left-[405px] absolute top-[165px] font-semibold text-black text-3xl tracking-[0.16px] leading-[normal] whitespace-nowrap">
-                {humidity}%
-            </div>
-
-            <div className="left-[392px] absolute top-[130px] font-semibold text-[#6b6bf9] text-base tracking-[0.16px] leading-[normal] whitespace-nowrap">
-                Humidity
-            </div>
+            {sensors.map(({ id, name, value, color, icon }) => (
+                <div key={id} className="flex flex-col items-center gap-2 w-1/3 min-w-[80px] max-w-[120px] text-center">
+                    <img className="w-2/4 h-auto max-w-[64px] sm:max-w-[78px]" src={icon} alt={name} />
+                    <p className="text-xs sm:text-base font-semibold" style={{ color }}>{name}</p>
+                    <p className="text-lg sm:text-3xl font-semibold text-black">{value}</p>
+                </div>
+            ))}
         </div>
     );
 };
