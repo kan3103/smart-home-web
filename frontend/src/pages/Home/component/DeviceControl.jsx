@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import light from "../../../assets/images/icon/light.png";
 import fan from "../../../assets/images/icon/fan.png";
@@ -11,9 +11,28 @@ const DeviceControl = () => {
 
     useEffect(() => {
         if (devices) {
-            setDeviceList([...devices]); // Tạo mảng mới để React nhận diện thay đổi
+            setDeviceList([...devices]); // Create a new array to trigger React update
         }
     }, [devices]);
+
+    const sendControlValue = async (id, value) => {
+        try {
+            const response = await fetch(`http://your-backend-url:8000/send/${id}/${value}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ value }),
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Control value sent successfully:', data);
+        } catch (error) {
+            console.error('Error sending control value:', error);
+        }
+    };
 
     const handleToggle = (index) => {
         const updatedDevice = {
@@ -22,6 +41,7 @@ const DeviceControl = () => {
         };
         const newDevices = deviceList.map((d, i) => (i === index ? updatedDevice : d));
         setDeviceList(newDevices);
+        sendControlValue(updatedDevice.id, updatedDevice.value);
         console.log("Updated device:", updatedDevice);
     };
 
@@ -51,7 +71,5 @@ const DeviceControl = () => {
         </div>
     );
 };
-
-
 
 export default DeviceControl;
