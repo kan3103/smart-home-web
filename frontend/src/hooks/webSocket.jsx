@@ -26,13 +26,12 @@ const Home_Temp = () => {
                     const existingDevice = prevDevices.find((d) => d.id === data.id);
                     if (existingDevice) {
                         return prevDevices.map((device) =>
-                            device.id === data.id ? { ...device, status: data.status } : device
+                            device.id === data.id ? { ...device, value: data.value } : device
                         );
                     } else {
                         return [...prevDevices, data];
                     }
                 });
-                console.log("Devices:", devices);
             }
         };
 
