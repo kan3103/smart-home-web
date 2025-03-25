@@ -1,11 +1,18 @@
-import React, { useId, useState } from "react";
+import React, { useId, useState,useEffect } from "react";
 import styled from "styled-components";
 
-const Switch = () => {
+const Switch = ({ status, onToggle }) => {
     const uniqueId = useId();
-    const [isOn, setIsOn] = useState(false);
+    const [isOn, setIsOn] = useState(status);
 
-    const toggleSwitch = () => setIsOn(!isOn);
+    useEffect(() => {
+        setIsOn(status); // Cập nhật khi `status` thay đổi
+    }, [status]);
+
+    const toggleSwitch = () => {
+        setIsOn(!isOn);
+        onToggle(); // Gọi hàm cập nhật trong `DeviceControl`
+    };
 
     return (
         <StyledWrapper>
@@ -22,14 +29,11 @@ const Switch = () => {
     );
 };
 
-// CSS tạo switch đẹp và hoạt động mượt
 const StyledWrapper = styled.div`
-    /* Ẩn checkbox hoàn toàn */
     input[type="checkbox"] {
         display: none;
     }
 
-    /* Thiết kế thanh switch */
     .toggleSwitch {
         display: flex;
         align-items: center;
@@ -42,8 +46,6 @@ const StyledWrapper = styled.div`
         cursor: pointer;
         transition-duration: 0.3s;
     }
-
-
 
     .toggleSwitch::after {
         content: "";
@@ -58,16 +60,11 @@ const StyledWrapper = styled.div`
         border: 5px solid white;
     }
 
-
-
-
-    /* Hiệu ứng khi bật */
     input[type="checkbox"]:checked + .toggleSwitch {
         background-color: rgb(148, 118, 255);
         transition-duration: .2s;
     }
 
-    /* Nút tròn di chuyển khi bật */
     input[type="checkbox"]:checked + .toggleSwitch::after {
         transform: translateX(200%);
         transition-duration: .2s;
