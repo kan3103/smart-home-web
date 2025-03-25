@@ -20,8 +20,8 @@ const StyledWrapper = styled.div`
     top: 50%;
     left: 50%;
     border-radius: 50%;
-    height: 96px;
-    width: 96px;
+    height: 55px;
+    width: 55px;
     animation: rotate_3922 1.2s linear infinite;
     background-color: #9b59b6;
     background-image: linear-gradient(#9b59b6, #84cdfa, #5ad1cd);

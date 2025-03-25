@@ -21,7 +21,6 @@ class MQTTClient:
 
     def __init__(self, websockets):
         self.websockets = websockets
-        self.feeds = {}
 
     def __new__(cls, websockets):
         if cls._instance is None:
@@ -33,6 +32,7 @@ class MQTTClient:
             cls._instance.client.connect("io.adafruit.com", 1883, 60)
             cls._instance.client.loop_start()
             cls._instance.websockets = websockets  
+            cls._instance.feeds = []
         return cls._instance
 
     @staticmethod
@@ -55,12 +55,15 @@ class MQTTClient:
         
     @classmethod
     async def _load_data(cls):
-        feeds = await get_ada_feeds()
-        for feed in feeds:
+        cls.feeds = await get_ada_feeds()
+        for feed in cls.feeds:
             cls._instance.client.subscribe(f"{ADAFRUIT_IO_USERNAME}/feeds/{feed}")
             cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{feed}" + "/get", "")
             print(f"Subscribed to {feed}")
-            
+    @classmethod
+    async def loaddata(cls):
+        for feed in cls.feeds:
+            cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{feed}" + "/get", "")
     @classmethod
     async def getdata(cls,topic):
         cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{topic}" + "/get", "")
@@ -99,7 +102,7 @@ class WebSocketHandler(MQTTObserver):
     async def add_websocket(self, websocket):
         self.websockets.add(websocket)
         try:
-            await MQTTClient._load_data()
+            await MQTTClient.loaddata()
             # Gửi dữ liệu cũ về client khi mới kết nối
             # await self.update("temperature", self._last_message[0])
             # await self.update("humidity", self._last_message[1])
@@ -121,10 +124,7 @@ class WebSocketHandler(MQTTObserver):
         else:
             data = await get_devices('bbc-'+topic)
             data = {"topic": topic, "value": message, "name": data.name, "type": data.type, "id": data.id}
-            print(data)
             
-        
-        
         data = json.dumps(data)
         for websocket in self.websockets:
             await websocket.send_text(data) 

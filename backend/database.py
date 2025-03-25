@@ -27,7 +27,7 @@ async def get_devices(ada_feed = None):
         ) if ada_feed is None else await session.execute(
             select(Device).where(Device.ada_feed == ada_feed)
         )
-        device = result.scalar_one_or_none()
+        device = result.scalar_one_or_none() if ada_feed is not None else result.scalars().all()
         return device
 
     
