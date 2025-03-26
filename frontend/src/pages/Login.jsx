@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import {React, useState} from "react";
+import { React, useState } from "react";
 import line1 from "../assets/images/loginPage/lineLogin.png";
 import line from "../assets/images/loginPage/lineLogin.png";
 import google from "../assets/images/loginPage/google.png";
@@ -12,17 +12,31 @@ import LoginButton from "../component/Login.jsx";
 import Loader from "../component/Loading";
 
 const Login = () => {
-    let email = "Email";
-    let pass = "Password";
-
-
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const handleLogin = () => {
+
+    const handleLogin = async () => {
         setLoading(true);
-        setTimeout(() => {
+        try {
+            const response = await fetch("http://your-backend-url:8000/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            localStorage.setItem("access_token", data.access_token);
+            console.log("Login successful, access_token saved");
+        } catch (error) {
+            console.error("Error during login:", error);
+        } finally {
             setLoading(false);
-            // window.location.href = "/";
-        }, 2000);
+        }
     };
 
     return (
@@ -44,8 +58,8 @@ const Login = () => {
                             id="email"
                             type="email"
                             className="absolute w-[386px] h-5 top-[15px] left-0 border-b-2 border-gray-300 focus:outline-none focus:border-black"
-                            placeholder={email}
-                            onChange={(e) => email = e.target.value}
+                            placeholder="Email"
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </label>
                 </div>
@@ -56,8 +70,8 @@ const Login = () => {
                             id="password"
                             type="password"
                             className="absolute w-[386px] h-5 top-[15px] left-0 border-b-2 border-gray-300 focus:outline-none focus:border-black"
-                            placeholder={pass}
-                            onChange={(e) => pass = e.target.value}
+                            placeholder="Password"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
                 </div>
@@ -82,7 +96,6 @@ const Login = () => {
 
                 <div className="absolute w-[226px] h-10 top-[732px] left-[259px]">
                     <div className="absolute w-10 h-10 top-0 left-0 bg-white rounded-[20px] shadow-[0px_4px_4px_#00000040]">
-                        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
                         <img
                             className="absolute w-[30px] h-[30px] top-[5px] left-[5px] object-cover"
                             alt="Image"
@@ -93,8 +106,6 @@ const Login = () => {
                     <div className="absolute w-[42px] h-10 top-0 left-[92px]">
                         <div className="relative w-[50px] h-12 -left-1">
                             <div className="absolute w-10 h-10 top-0 left-[5px] bg-[#d9d9d9] rounded-[20px]" />
-
-                            {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
                             <img
                                 className="absolute w-[42px] h-10 top-0 left-0"
                                 alt="Image"
