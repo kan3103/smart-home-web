@@ -4,7 +4,7 @@ const Card = () => {
     return (
         <StyledWrapper>
             <div className="navigation-card">
-                <a href="#" className="tab">
+                <a href="/" className="tab">
                     <svg className="svgIcon" viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100.5 40.75V96.5H66V68.5V65H62.5H43H39.5V68.5V96.5H3.5V40.75L52 4.375L100.5 40.75Z" stroke="black" strokeWidth={7} />
                     </svg>
@@ -30,7 +30,7 @@ const Card = () => {
             </div>
 
             <div className="navigation-card">
-                <a href="#" className="tab">
+                <a href="/add-member" className="tab">
                     <div className="relative h-[30px]">
                         <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users-round">
                             <path d="M18 21a8 8 0 0 0-16 0" />
