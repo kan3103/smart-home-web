@@ -1,10 +1,22 @@
 import React, { useState, useEffect, useId } from "react";
-import styled from "styled-components";
 import light from "../../../assets/images/icon/light.png";
 import fan from "../../../assets/images/icon/fan.png";
 import Home_Temp from "../../../hooks/webSocket";
 import Switch from "../../../component/Home/Switch";
+import axios from "axios";
+const sendPostRequest = async (id,value) => {
 
+    console.log(id)
+    try {
+      const response = await axios.post(`http://10.28.129.62:8000/send/${id}`, {
+         value: value,
+      });
+  
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 const DeviceControl = () => {
     const [temperature, humidity, devices] = Home_Temp();
     const [deviceList, setDeviceList] = useState([]);
@@ -20,6 +32,7 @@ const DeviceControl = () => {
             ...deviceList[index],
             value: deviceList[index].value === "1" ? "0" : "1",
         };
+        sendPostRequest(deviceList[index].id, deviceList[index].value === "1" ? "0" : "1");
         const newDevices = deviceList.map((d, i) => (i === index ? updatedDevice : d));
         setDeviceList(newDevices);
         console.log("Updated device:", updatedDevice);

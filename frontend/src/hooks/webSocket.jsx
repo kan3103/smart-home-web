@@ -6,7 +6,8 @@ const Home_Temp = () => {
     const [devices, setDevices] = useState([]);
 
     useEffect(() => {
-        const socket = new WebSocket("ws://192.168.10.28:8000/ws");
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0Mjk5NTY3MX0.tdXQ4GjYA7Z0shP5aB-lxgh-VyMBp5IukU70GC_k7Ug'; 
+        const socket = new WebSocket(`ws://10.28.129.62:8000/ws`);
 
         socket.onopen = () => {
             console.log("WebSocket Connected");
