@@ -1,47 +1,48 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect, useId } from "react";
 import light from "../../../assets/images/icon/light.png";
 import fan from "../../../assets/images/icon/fan.png";
 import Home_Temp from "../../../hooks/webSocket";
 import Switch from "../../../component/Home/Switch";
+import axios from "axios";
+const sendPostRequest = async (id,value) => {
 
+    console.log(id)
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraGFuZyIsImV4cCI6MTc0NDU5Mjk3Nn0.2dhRPocXS8a8eOoUqK8MZbvMpnYtstJAq68XVMzDF1M"
+    try {
+      const response = await axios.post(`http://192.168.10.28:8000/send/${id}`, {
+         value: value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 const DeviceControl = () => {
     const [temperature, humidity, devices] = Home_Temp();
     const [deviceList, setDeviceList] = useState([]);
 
     useEffect(() => {
         if (devices) {
-            setDeviceList([...devices]); // Create a new array to trigger React update
+            setDeviceList([...devices]); // Tạo mảng mới để React nhận diện thay đổi
         }
     }, [devices]);
-
-    const sendControlValue = async (id, value) => {
-        try {
-            const response = await fetch(`http://your-backend-url:8000/send/${id}/${value}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ value }),
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            console.log('Control value sent successfully:', data);
-        } catch (error) {
-            console.error('Error sending control value:', error);
-        }
-    };
 
     const handleToggle = (index) => {
         const updatedDevice = {
             ...deviceList[index],
             value: deviceList[index].value === "1" ? "0" : "1",
         };
+        sendPostRequest(deviceList[index].id, deviceList[index].value === "1" ? "0" : "1");
         const newDevices = deviceList.map((d, i) => (i === index ? updatedDevice : d));
         setDeviceList(newDevices);
-        sendControlValue(updatedDevice.id, updatedDevice.value);
         console.log("Updated device:", updatedDevice);
     };
 
@@ -71,5 +72,7 @@ const DeviceControl = () => {
         </div>
     );
 };
+
+
 
 export default DeviceControl;
