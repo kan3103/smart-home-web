@@ -1,5 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Float, Date, func
+from sqlalchemy import Column, Integer, String, Float, Date, func , ForeignKey
+from sqlalchemy.orm import relationship
+
 
 Base = declarative_base()
 
@@ -22,15 +24,39 @@ class HomeStatus(Base):
     temperature_min = Column(Float)
     
 class User(Base):
-    __tablename__ = "user"
-
+    __tablename__ = "users"
+    
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, index=True)
-    password = Column(String)
     name = Column(String)
+    sex = Column(String)
+    type = Column(String)  # 'member' hoặc 'guest'
 
-class FaceReg(Base):
-    __tablename__ = "face"
-    
-    id = Column(Integer, primary_key=True, index= True)
-    
+    __mapper_args__ = {
+        'polymorphic_identity': 'user',
+        'polymorphic_on': type
+    }
+
+class Member(User):
+    __tablename__ = "members"
+
+    id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    username = Column(String, unique=True, index=True)
+    password = Column(String)
+    dob = Column(Date)
+    level = Column(String)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'member',
+    }
+
+class Guest(User):
+    __tablename__ = "guests"
+
+    id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    num_visited = Column(Integer)
+    member_rel = Column(String)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'guest',
+    }
+

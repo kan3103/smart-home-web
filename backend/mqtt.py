@@ -3,14 +3,13 @@ import json
 import paho.mqtt.client as mqtt
 import os
 from dotenv import load_dotenv
-from database import save_temp_humi, get_ada_feeds , get_devices
+from database import save_temp_humi, get_ada_feeds , get_devices 
 main_loop = asyncio.get_event_loop()
 # Load biến môi trường từ file .env
 load_dotenv()
 # Cấu hình Adafruit IO
 ADAFRUIT_IO_USERNAME = os.getenv("ADAFRUIT_IO_USERNAME")
 ADAFRUIT_IO_KEY = os.getenv("ADAFRUIT_IO_KEY")
-ADAFRUIT_IO_FEED = ["bbc-temperature", "bbc-humidity","bbc-button","bbc_led"]
 
 class MQTTObserver:
     async def update(self, topic: str, message: str):
@@ -80,21 +79,6 @@ class MQTTClient:
         cls._instance.client.publish(f"{ADAFRUIT_IO_USERNAME}/feeds/{topic}", message)
         print(f"Sent message: {message} to {topic}")
         
-# class FeedHandler:
-#     def __init__(self, feed_name, mqtt_client):
-#         self.feed_name = feed_name
-#         self.mqtt_client = mqtt_client
-#         self.mqtt_client.register_feed(feed_name, self)
-
-#     def handle_message(self, message):
-#         print(f"Feed {self.feed_name} received: {message}")
-
-#     def send_data(self, value):
-#         self.mqtt_client.publish(self.feed_name, value)
-        
-        
-
-        
 class WebSocketHandler(MQTTObserver):
     websockets = set()
     _last_message = ["0", "0"]
@@ -103,9 +87,6 @@ class WebSocketHandler(MQTTObserver):
         self.websockets.add(websocket)
         try:
             await MQTTClient.loaddata()
-            # Gửi dữ liệu cũ về client khi mới kết nối
-            # await self.update("temperature", self._last_message[0])
-            # await self.update("humidity", self._last_message[1])
         except Exception as e:
             print(f"Error when adding websocket: {e}")
 
