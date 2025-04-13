@@ -7,10 +7,18 @@ import axios from "axios";
 const sendPostRequest = async (id,value) => {
 
     console.log(id)
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraGFuZyIsImV4cCI6MTc0NDU5Mjk3Nn0.2dhRPocXS8a8eOoUqK8MZbvMpnYtstJAq68XVMzDF1M"
     try {
-      const response = await axios.post(`http://10.28.129.62:8000/send/${id}`, {
+      const response = await axios.post(`http://192.168.10.28:8000/send/${id}`, {
          value: value,
-      });
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
   
       console.log("Response:", response.data);
     } catch (error) {

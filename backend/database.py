@@ -2,7 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from sqlalchemy import func
-from models import Device, HomeStatus
+from models import Device, HomeStatus ,Member, Guest, User
+from passlib.context import CryptContext
 
 # Kết nối đến PostgreSQL
 DATABASE_URL = "postgresql+asyncpg://postgres:310304@localhost:5432/smarthome"
@@ -38,14 +39,6 @@ async def get_ada_feeds():
         )
         ada_feeds = result.scalars().all()
         return ada_feeds
-# async def getmember():
-#     async with SessionLocal() as session:
-#         result = await session.execute(
-#             select(User.username,User.name)
-#         )
-#         devices = result.scalars().all()
-#         return devices
-
 
 async def add_device(name: str, ada_feed: str, type: str):
     async with SessionLocal() as session:
@@ -78,3 +71,31 @@ async def save_temp_humi(topic: str, message: str):
     #     session.add(device)
     #     await session.commit()
     #     return device
+    
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+async def register_user(username: str, password: str):
+    async with SessionLocal() as session:
+        # Kiểm tra username đã tồn tại chưa
+        result = await session.execute(select(Member).where(Member.username == username))
+        existing_user = result.scalar()
+        if existing_user:
+            return {"error": "Username already exists"}
+
+        # Hash mật khẩu
+        hashed_password = pwd_context.hash(password)
+
+        # Tạo user mới
+        user = Member(username=username, password=hashed_password)
+
+        session.add(user)
+        await session.commit()
+        await session.refresh(user)  # load lại từ DB nếu cần ID hoặc thông tin khác
+
+        return {"message": "User registered successfully", "user_id": user.id}
+    
+async def get_user(username: str):
+    async with SessionLocal() as session:
+        # Kiểm tra username và mật khẩu
+        result = await session.execute(select(Member).where(Member.username == username))
+        user = result.scalar_one_or_none()
+        return user
