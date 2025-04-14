@@ -4,12 +4,13 @@ import fan from "../../../assets/images/icon/fan.png";
 import Home_Temp from "../../../hooks/webSocket";
 import Switch from "../../../component/Home/Switch";
 import axios from "axios";
+import {MYIP} from "../../../api/ip.js";
 const sendPostRequest = async (id,value) => {
-
+    const myip = MYIP; // Replace with your actual IP address
     console.log(id)
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraGFuZyIsImV4cCI6MTc0NDU5Mjk3Nn0.2dhRPocXS8a8eOoUqK8MZbvMpnYtstJAq68XVMzDF1M"
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NDY1MTUxNn0.35KNdcNnmrXGbIaB_aBr1BjhdsMsAPL3GeIZhZlMXfI"
     try {
-      const response = await axios.post(`http://192.168.10.28:8000/send/${id}`, {
+      const response = await axios.post(`http://${myip}/send/${id}`, {
          value: value,
       },
       {

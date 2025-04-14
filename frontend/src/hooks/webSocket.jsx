@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import {MYIP} from "../api/ip.js";
 
 const Home_Temp = () => {
     const [temperature, setTemperature] = useState(null);
     const [humidity, setHumidity] = useState(null);
     const [devices, setDevices] = useState([]);
-
+    const myip = MYIP; 
     useEffect(() => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraGFuZyIsImV4cCI6MTc0NDU5Mjk3Nn0.2dhRPocXS8a8eOoUqK8MZbvMpnYtstJAq68XVMzDF1M'; 
-        const socket = new WebSocket(`ws://192.168.10.28:8000/ws?token=${token}`);
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NDY1MTUxNn0.35KNdcNnmrXGbIaB_aBr1BjhdsMsAPL3GeIZhZlMXfI'; 
+        const socket = new WebSocket(`ws://${myip}/ws?token=${token}`);
 
         socket.onopen = () => {
             console.log("WebSocket Connected");
