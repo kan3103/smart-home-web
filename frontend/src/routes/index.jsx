@@ -1,6 +1,7 @@
 import Dashboard from '../pages/Home/HomePage';
 import SignInPage from '../pages/CreateAccount.jsx';
 import Login from "../pages/Login.jsx";
+import AddMember from "../pages/AddMember/AddMember";
 
 const routes = [
     {
@@ -28,10 +29,10 @@ const routes = [
         // protected: false,
     },
     {
-        path: '/add-printing',
-        // component: AddMember,
-        protected: true,
-        allowedRoles: ['admin'],
+        path: '/add-member',
+        component: AddMember,
+        // protected: false,
+        // allowedRoles: ['admin'],
     },
     {
         path: '/profile',

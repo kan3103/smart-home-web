@@ -6,8 +6,13 @@ const Home_Temp = () => {
     const [devices, setDevices] = useState([]);
 
     useEffect(() => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraGFuZyIsImV4cCI6MTc0NDU5Mjk3Nn0.2dhRPocXS8a8eOoUqK8MZbvMpnYtstJAq68XVMzDF1M'; 
-        const socket = new WebSocket(`ws://192.168.10.28:8000/ws?token=${token}`);
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            window.location.href = "/login";
+            return;
+        }
+
+        const socket = new WebSocket(`ws://192.168.1.103:8000/ws?token=${token}`);
 
         socket.onopen = () => {
             console.log("WebSocket Connected");
@@ -15,6 +20,10 @@ const Home_Temp = () => {
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            if (data.status === 401) {
+                localStorage.removeItem("access_token");
+                window.location.href = "/login";
+            }
             
             if (data.topic === "temperature") {
                 console.log("Temperature:", data.message);

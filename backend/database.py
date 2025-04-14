@@ -6,7 +6,7 @@ from models import Device, HomeStatus ,Member, Guest, User
 from passlib.context import CryptContext
 
 # Kết nối đến PostgreSQL
-DATABASE_URL = "postgresql+asyncpg://postgres:310304@localhost:5432/smarthome"
+DATABASE_URL = "postgresql+asyncpg://postgres:saturn@localhost:5432/smarthome"
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
