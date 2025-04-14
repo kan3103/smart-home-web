@@ -27,12 +27,13 @@ const Login = () => {
     const handleLogin = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://your-backend-url:8000/login", {
+            const formData = new FormData();
+            formData.append("username", email);
+            formData.append("password", password);
+
+            const response = await fetch("http://192.168.1.103:8000/token", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
+                body: formData,
             });
 
             if (!response.ok) {
@@ -40,10 +41,10 @@ const Login = () => {
             }
 
             const data = await response.json();
-            localStorage.setItem("access_token", data.access_token);
+            localStorage.setItem("access_token", data.access_token); // Store token in localStorage
             console.log("Login successful, access_token saved");
 
-            setIsLoggedIn(true); // Kích hoạt useEffect để chuyển trang
+            setIsLoggedIn(true); // Trigger useEffect to navigate
         } catch (error) {
             console.error("Error during login:", error);
             setLoading(false);
@@ -106,3 +107,4 @@ const Login = () => {
 };
 
 export default Login;
+

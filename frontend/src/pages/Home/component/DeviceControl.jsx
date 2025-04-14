@@ -4,27 +4,35 @@ import fan from "../../../assets/images/icon/fan.png";
 import Home_Temp from "../../../hooks/webSocket";
 import Switch from "../../../component/Home/Switch";
 import axios from "axios";
-const sendPostRequest = async (id,value) => {
-
-    console.log(id)
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJraGFuZyIsImV4cCI6MTc0NDU5Mjk3Nn0.2dhRPocXS8a8eOoUqK8MZbvMpnYtstJAq68XVMzDF1M"
-    try {
-      const response = await axios.post(`http://192.168.10.28:8000/send/${id}`, {
-         value: value,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
+const sendPostRequest = async (id, value) => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+        window.location.href = "/login";
+        return;
     }
-  };
+
+    try {
+        const response = await axios.post(
+            `http://192.168.10.28:8000/send/${id}`,
+            { value },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log("Response:", response.data);
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem("access_token");
+            window.location.href = "/login";
+        } else {
+            console.error("Error:", error);
+        }
+    }
+};
 const DeviceControl = () => {
     const [temperature, humidity, devices] = Home_Temp();
     const [deviceList, setDeviceList] = useState([]);
@@ -76,3 +84,4 @@ const DeviceControl = () => {
 
 
 export default DeviceControl;
+
