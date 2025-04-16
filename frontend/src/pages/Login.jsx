@@ -16,6 +16,13 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const token = localStorage.getItem("access_token");
+        if (token) {
+            navigate("/");
+        }
+    }, [navigate]);
+
+    useEffect(() => {
         if (isLoggedIn) {
             const timer = setTimeout(() => {
                 navigate("/");
@@ -31,7 +38,7 @@ const Login = () => {
             formData.append("username", email);
             formData.append("password", password);
 
-            const response = await fetch("http://192.168.1.103:8000/token", {
+            const response = await fetch("http://10.130.74.186:8000/token", {
                 method: "POST",
                 body: formData,
             });

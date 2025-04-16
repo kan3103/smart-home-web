@@ -13,7 +13,7 @@ const sendPostRequest = async (id, value) => {
 
     try {
         const response = await axios.post(
-            `http://192.168.10.28:8000/send/${id}`,
+            `http://10.130.74.186:8000/send/${id}`,
             { value },
             {
                 headers: {
