@@ -23,7 +23,7 @@ const Home_Temp = () => {
         
         // Initialize WebSocket connection
         const connectWebSocket = () => {
-            socket = new WebSocket(`ws://10.130.74.186:8000/ws?token=${token}`);
+            socket = new WebSocket(`ws://192.168.1.100:8000/ws?token=${token}`);
             
             socket.onopen = () => {
                 console.log("WebSocket Connected");

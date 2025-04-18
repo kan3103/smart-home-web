@@ -1,46 +1,163 @@
-import {React} from "react";
+import React, {useState, useEffect} from "react";
+import {Line} from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
+import Home_Temp from "../../../hooks/webSocket";
+import weatherMapAPI from "../../../api/weatherMapAPI";
 
-const Chart = () => (
-    <div className="absolute w-[342px] h-[174px] top-[41px] left-[53px]">
-        <img
-            className="absolute w-[339px] h-[174px] top-0 left-px"
-            alt="Group"
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
-        />
+const Chart = () => {
+    const [temperature, humidity] = Home_Temp();
+    const weatherData = weatherMapAPI();
+    const [chartData, setChartData] = useState({
+        labels: [],
+        datasets: [],
+    });
+    const [chartDataHumidity, setChartDataHumidity] = useState({
+        labels: [],
+        datasets: [],
+    });
 
-        <img
-            className="absolute w-[342px] h-[164px] top-2.5 left-0"
-            alt="Group"
+    // Setup options for the charts
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "top",
+            },
+            title: {
+                display: true,
+                text: "Temperature (°C)",
+            },
+        },
+        scales: {
+            y: {
+                min: 15,
+                max: 40,
+            },
+        },
+    };
 
-        />
+    const humidityOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "top",
+            },
+            title: {
+                display: true,
+                text: "Humidity (%)",
+            },
+        },
+        scales: {
+            y: {
+                min: 0,
+                max: 100,
+            },
+        },
+    };
 
-        <img
-            className="absolute w-px h-[108px] top-[66px] left-[174px] object-cover"
-            alt="Vector"
+    useEffect(() => {
+        const currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
-        />
+        const outsideTemp = weatherData ? ((weatherData.temperature - 32) * 5 / 9).toFixed(1) : null;
+        const outsideHumidity = weatherData ? weatherData.humidity : null;
 
-        <div className="absolute w-[61px] h-[35px] top-7 left-[145px] shadow-[0px_0px_4px_#0000001f]">
-            <div className="relative w-[67px] h-10 -top-1 -left-1">
-                <img
-                    className="absolute w-3 h-[3px] top-[35px] left-7"
-                    alt="Vector"
+        if (temperature !== undefined) {
+            setChartData(prevData => {
+                const newLabels = [...prevData.labels, currentTime];
+                const indoorTemp = [...(prevData.datasets[0]?.data || []), temperature];
+                const outdoorTemp = [...(prevData.datasets[1]?.data || []), outsideTemp];
 
-                />
+                const labels = newLabels.slice(-10);
+                const indoorData = indoorTemp.slice(-10);
+                const outdoorData = outdoorTemp.slice(-10);
 
-                <img
-                    className="absolute w-[67px] h-10 top-0 left-0"
-                    alt="Rectangle"
+                return {
+                    labels,
+                    datasets: [
+                        {
+                            label: "Indoor Temperature",
+                            data: indoorData,
+                            borderColor: "rgb(75, 192, 192)",
+                            backgroundColor: "rgba(75, 192, 192, 0.5)",
+                        },
+                        {
+                            label: "Outdoor Temperature",
+                            data: outdoorData,
+                            borderColor: "rgb(255, 99, 132)",
+                            backgroundColor: "rgba(255, 99, 132, 0.5)",
+                        },
+                    ],
+                };
+            });
+        }
 
-                />
+        if (humidity !== undefined) {
+            setChartDataHumidity(prevData => {
+                const newLabels = [...prevData.labels, currentTime];
+                const indoorHumidity = [...(prevData.datasets[0]?.data || []), humidity];
+                const outdoorHumidity = [...(prevData.datasets[1]?.data || []), outsideHumidity];
 
-                <div className="absolute h-3.5 top-[13px] left-3 [font-family:'Roboto-Medium',Helvetica] font-medium text-[#6b6bf9] text-[11px] text-center tracking-[0.11px] leading-[14px] whitespace-nowrap">
-                    340KWh
+                // Keep only the last 10 data points
+                const labels = newLabels.slice(-10);
+                const indoorData = indoorHumidity.slice(-10);
+                const outdoorData = outdoorHumidity.slice(-10);
+
+                return {
+                    labels,
+                    datasets: [
+                        {
+                            label: "Indoor Humidity",
+                            data: indoorData,
+                            borderColor: "rgb(53, 162, 235)",
+                            backgroundColor: "rgba(53, 162, 235, 0.5)",
+                        },
+                        {
+                            label: "Outdoor Humidity",
+                            data: outdoorData,
+                            borderColor: "rgb(153, 102, 255)",
+                            backgroundColor: "rgba(153, 102, 255, 0.5)",
+                        },
+                    ],
+                };
+            });
+        }
+    }, [temperature, humidity, weatherData]);
+
+    return (
+        <div className="bg-white rounded-2xl shadow-md p-4">
+            <h2 className="text-lg font-semibold mb-2 ">Environment Trends</h2>
+            <div className="grid grid-cols-1 gap-4">
+                <div className="h-48">
+                    {chartData.datasets.length > 0 && <Line options={options} data={chartData}/>}
+                </div>
+                <div className="h-48">
+                    {chartDataHumidity.datasets.length > 0 &&
+                        <Line options={humidityOptions} data={chartDataHumidity}/>}
                 </div>
             </div>
         </div>
+    );
+};
 
-        <div className="absolute w-3 h-3 top-[66px] left-[169px] bg-white rounded-[5.99px/6px] border-2 border-solid border-[#6b6bf9]" />
-    </div>
-);
 export default Chart;

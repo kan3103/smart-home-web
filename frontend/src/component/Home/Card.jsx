@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 const Card = () => {
     return (
         <StyledWrapper>
@@ -42,23 +44,19 @@ const Card = () => {
             </div>
 
             <div className="navigation-card">
-                <a href="#" className="tab">
-                        <input id="bookmark" type="checkbox" />
-                        <label className="bookmark" htmlFor="bookmark">
-                            <svg id="Bookmark" viewBox="0 0 10 22" xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" className="bookmark-icon">
-                                <g fillRule="evenodd" fill="none">
-                                    <g className="color000000 svgShape" transform="translate(-265 -2679)" fill="#242424">
-                                        <g className="color000000 svgShape" fill="#242424" transform="translate(56 160)">
-                                            <path className="color000000 svgShape" fill="#242424" d="M219 2521v16.998c0 .891-1.077 1.337-1.707.707l-2.586-2.586a1 1 0 0 0-1.414 0l-2.586 2.586c-.63.63-1.707.184-1.707-.707V2521a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2" />
-                                        </g>
-                                    </g>
+                {/* Fixed link to AddDevice page - removed inner checkbox structure that was preventing navigation */}
+                <a href="/add-device" className="tab">
+                    <svg id="Bookmark" viewBox="0 0 10 22" xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" className="bookmark-icon">
+                        <g fillRule="evenodd" fill="none">
+                            <g className="color000000 svgShape" transform="translate(-265 -2679)" fill="#242424">
+                                <g className="color000000 svgShape" fill="#242424" transform="translate(56 160)">
+                                    <path className="color000000 svgShape" fill="#242424" d="M219 2521v16.998c0 .891-1.077 1.337-1.707.707l-2.586-2.586a1 1 0 0 0-1.414 0l-2.586 2.586c-.63.63-1.707.184-1.707-.707V2521a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2" />
                                 </g>
-                            </svg>
-                            <div className="shimmer" />
-                        </label>
+                            </g>
+                        </g>
+                    </svg>
                 </a>
             </div>
-
 
             <div className= "navigation-card" >
                 <a href="#" className="tab">
@@ -70,7 +68,7 @@ const Card = () => {
             </div>
 
             <div className= "navigation-card" >
-                <a href="#" className="tab">
+                <a href="/dashboard" className="tab">
                     <svg
                         width="50"
                         height="50"
