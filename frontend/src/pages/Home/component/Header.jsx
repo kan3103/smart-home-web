@@ -1,7 +1,7 @@
 import React from "react";
 import login2 from "../../../assets/images/loginPage/login2.png";
 import hostAvatar from "../../../assets/images/home/hostAvatar.png";
-// import Search from "../../../component/Home/Search";
+import Dropdown from "./Dropdown";
 import Card from "../../../component/Home/Card";
 
 const Header = () => (
@@ -25,11 +25,7 @@ const Header = () => (
         <div className="flex items-center gap-3">
             <img className="w-[36px] h-[36px]" alt="Avatar" src={hostAvatar} />
             <div className="text-base font-semibold text-[#00000066]">Host</div>
-            <svg className="w-6 h-6" viewBox="0 0 24 24">
-                <circle cx="12" cy="5" r="2" />
-                <circle cx="12" cy="12" r="2" />
-                <circle cx="12" cy="19" r="2" />
-            </svg>
+            <Dropdown/>
         </div>
     </div>
 );

@@ -13,7 +13,7 @@ const sendPostRequest = async (id, value) => {
 
     try {
         const response = await axios.post(
-            `http://192.168.10.28:8000/send/${id}`,
+            `http://192.168.1.100:8000/send/${id}`,
             { value },
             {
                 headers: {
@@ -84,4 +84,3 @@ const DeviceControl = () => {
 
 
 export default DeviceControl;
-
