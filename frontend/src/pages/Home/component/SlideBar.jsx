@@ -1,4 +1,4 @@
-import { useState ,useEffect} from "react";
+import { useState } from "react";
 import home1 from "../../../assets/images/home/home1.png";
 import lock from "../../../assets/images/icon/lock.png";
 import unlock from "../../../assets/images/icon/unlock.png";

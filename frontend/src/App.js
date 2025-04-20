@@ -5,8 +5,10 @@ import ProtectedRoute from './pages/Login/ProtectedRoute';
 import { WebSocketProvider } from './api/websocket';
 function App() {
     return (
-        <WebSocketProvider><BrowserRouter>
-        <Routes>
+       
+        <BrowserRouter>
+         <WebSocketProvider>
+         <Routes>
             {routes.map((route, index) => {
                 const Page = route.component;
                 console.log('route layout', route.layout);
@@ -42,7 +44,10 @@ function App() {
                 );
             })}
         </Routes>
-    </BrowserRouter></WebSocketProvider>
+         </WebSocketProvider>
+        
+    </BrowserRouter>
+
         
     );
 }
