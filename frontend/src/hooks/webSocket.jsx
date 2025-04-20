@@ -6,6 +6,14 @@ const Home_Temp = () => {
     const [humidity, setHumidity] = useState(null);
     const [door, setDoor] = useState(null);
     const [devices, setDevices] = useState([]);
+    const [connected, setConnected] = useState(false);
+
+    // Handle logout and token invalidation
+    const handleInvalidToken = useCallback(() => {
+        localStorage.removeItem("access_token");
+        window.location.href = "/login";
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem("access_token");
         console.log("Token:", token);
@@ -14,56 +22,75 @@ const Home_Temp = () => {
             return;
         }
 
-        const socket = new WebSocket(`ws://${MYIP}/ws?token=${token}`);
-
-        socket.onopen = () => {
-            console.log("WebSocket Connected");
-        };
-
-        socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data.status === 401) {
-                localStorage.removeItem("access_token");
-                window.location.href = "/login";
-            }
+        let socket = null;
+        
+        // Initialize WebSocket connection
+        const connectWebSocket = () => {
+            socket = new WebSocket(`ws://192.168.1.100:8000/ws?token=${token}`);
             
-            if (data.topic === "temperature") {
-                console.log("Temperature:", data.message);
-                setTemperature(data.message);
-            } else if (data.topic === "humidity") {
-                setHumidity(data.message);
-            } else if (data.topic === "door"){
-                setDoor(data);
-                console.log("Door status:", data.value);
-            } 
-            else {
-                setDevices((prevDevices) => {
-                    const existingDevice = prevDevices.find((d) => d.id === data.id);
-                    if (existingDevice) {
-                        return prevDevices.map((device) =>
-                            device.id === data.id ? { ...device, value: data.value } : device
-                        );
-                    } else {
-                        return [...prevDevices, data];
-                    }
-                });
-            }
-        };
+            socket.onopen = () => {
+                console.log("WebSocket Connected");
+                setConnected(true);
+            };
+            
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.status === 401) {
+                    handleInvalidToken();
+                    return;
+                }
+                
+                if (data.topic === "temperature") {
+                    console.log("Temperature:", data.message);
+                    setTemperature(data.message);
+                } else if (data.topic === "humidity") {
+                    console.log("Humidity:", data.message);
+                    setHumidity(data.message);
+                } else if (data.topic === "door"){
+                    setDoor(data);
+                    console.log("Door status:", data.value);
+                }  
+                else {
+                    setDevices((prevDevices) => {
+                        const existingDevice = prevDevices.find((d) => d.id === data.id);
+                        if (existingDevice) {
+                            return prevDevices.map((device) =>
+                                device.id === data.id ? { ...device, value: data.value } : device
+                            );
+                        } else {
+                            return [...prevDevices, data];
+                        }
+                    });
+                }
+            };
 
-        socket.onerror = (error) => {
-            console.error("WebSocket Error:", error);
-        };
+            socket.onerror = (error) => {
+                console.error("WebSocket Error:", error);
+                setConnected(false);
+            };
 
-        socket.onclose = () => {
-            console.log("WebSocket Disconnected");
+            socket.onclose = (event) => {
+                console.log("WebSocket Disconnected", event.code, event.reason);
+                setConnected(false);
+                
+                // Don't try to reconnect if token was invalid (logout case)
+                if (event.code !== 4001 && localStorage.getItem("access_token")) {
+                    console.log("Attempting to reconnect...");
+                    setTimeout(connectWebSocket, 3000);
+                }
+            };
         };
+        
+        connectWebSocket();
 
         return () => {
-            socket.close();
+            if (socket) {
+                socket.close();
+            }
         };
-    }, []);
+    }, [handleInvalidToken]);
 
-    return [temperature, humidity, door, devices];
+    return [temperature, humidity, door, devices, connected];
 };
 
 export default Home_Temp;

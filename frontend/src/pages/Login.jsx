@@ -17,6 +17,13 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const token = localStorage.getItem("access_token");
+        if (token) {
+            navigate("/");
+        }
+    }, [navigate]);
+
+    useEffect(() => {
         if (isLoggedIn) {
             const timer = setTimeout(() => {
                 navigate("/");

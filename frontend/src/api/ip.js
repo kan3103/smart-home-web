@@ -1,3 +1,3 @@
-const MYIP = "10.28.128.231:8000";
+const MYIP = "128.1.1.69:8000";
 
 export { MYIP };
