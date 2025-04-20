@@ -2,7 +2,7 @@ import Dashboard from '../pages/Home/HomePage';
 import SignInPage from '../pages/CreateAccount.jsx';
 import Login from "../pages/Login.jsx";
 import AddMember from "../pages/AddMember/AddMember";
-import AddDevice from "../pages/AddMember/AddDevice";
+import AddDevice from "../pages/AddDevice/AddDevice";
 import Chart from "../pages/Dashboard/DashboardPage";
 
 const routes = [

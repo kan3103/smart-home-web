@@ -17,7 +17,7 @@ const DashboardPage = () => {
           </div>
           
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Indoor vs Outdoor Temperature</h2>
+            <h2 className="text-xl font-semibold mb-4">Indoor vs Outdoor</h2>
             <div className="h-[400px]">
               <IndoorOutdoorComparisonChart />
             </div>
@@ -27,5 +27,4 @@ const DashboardPage = () => {
     </div>
   );
 };
-
 export default DashboardPage;
