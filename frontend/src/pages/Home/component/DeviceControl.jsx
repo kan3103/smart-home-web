@@ -4,6 +4,7 @@ import fan from "../../../assets/images/icon/fan.png";
 import Home_Temp from "../../../hooks/webSocket";
 import Switch from "../../../component/Home/Switch";
 import axios from "axios";
+import { MYIP } from "../../../api/ip.js";
 const sendPostRequest = async (id, value) => {
     const token = localStorage.getItem("access_token");
     if (!token) {
@@ -13,7 +14,7 @@ const sendPostRequest = async (id, value) => {
 
     try {
         const response = await axios.post(
-            `http://192.168.1.100:8000/send/${id}`,
+            `http://${MYIP}/send/${id}`,
             { value },
             {
                 headers: {
@@ -33,8 +34,9 @@ const sendPostRequest = async (id, value) => {
         }
     }
 };
+
 const DeviceControl = () => {
-    const [temperature, humidity, devices] = Home_Temp();
+    const [temperature, humidity, door, devices] = Home_Temp();
     const [deviceList, setDeviceList] = useState([]);
 
     useEffect(() => {

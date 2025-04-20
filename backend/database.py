@@ -2,11 +2,11 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from sqlalchemy import func
-from models import Device, HomeStatus ,Member, Guest, User
+from models import Device, HomeStatus ,Member
 from passlib.context import CryptContext
-
+from auth import hash_password
 # Kết nối đến PostgreSQL
-DATABASE_URL = "postgresql+asyncpg://postgres:saturn@localhost:5432/smarthome"
+DATABASE_URL = "postgresql+asyncpg://postgres:310304@localhost:5432/smarthome"
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -67,12 +67,8 @@ async def save_temp_humi(topic: str, message: str):
             await session.commit()
 
 
-    # async with SessionLocal() as session:
-    #     session.add(device)
-    #     await session.commit()
-    #     return device
-    
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
 async def register_user(username: str, password: str):
     async with SessionLocal() as session:
         # Kiểm tra username đã tồn tại chưa
@@ -81,10 +77,8 @@ async def register_user(username: str, password: str):
         if existing_user:
             return {"error": "Username already exists"}
 
-        # Hash mật khẩu
-        hashed_password = pwd_context.hash(password)
+        hashed_password = hash_password(password)
 
-        # Tạo user mới
         user = Member(username=username, password=hashed_password)
 
         session.add(user)

@@ -34,7 +34,8 @@ async def websocket_endpoint(websocket: WebSocket):
     except Exception as e:
         print(f"WebSocket error: {e}")
     finally:
-        await web_socket_handler.remove_websocket(websocket)
+        web_socket_handler.remove_websocket(websocket)
+
         
 @app.get("/")
 def read_root():
@@ -60,7 +61,7 @@ async def get_device(username: str = Depends(verify_token)):
 @app.post("/device/")
 async def add_device_new(device: dict = Body(...), username: str = Depends(verify_token)):
     await db.add_device(device["name"], device["ada_feed"], device["type"])
-    # print(device)
+
     return {"message": f"Device added by {username}", "device": device}
 
 
@@ -77,5 +78,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     access_token = create_access_token(data={"sub": form_data.username}, expires_delta=timedelta(minutes=30))
     return {"access_token": access_token, "token_type": "bearer"}
+
+
 
 

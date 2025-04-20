@@ -7,6 +7,7 @@ import login4 from "../assets/images/loginPage/login4.png";
 import LoginButton from "../component/Login.jsx";
 import Loader from "../component/Loading";
 import LoadingOverlay from "../component/LoadingOverlay";
+import { MYIP } from "../api/ip.js"; // Import MYIP from your api file
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ const Login = () => {
             formData.append("username", email);
             formData.append("password", password);
 
-            const response = await fetch("http://192.168.1.100:8000/token", {
+            const response = await fetch(`http://${MYIP}/token`, {
                 method: "POST",
                 body: formData,
             });
@@ -49,7 +50,7 @@ const Login = () => {
 
             const data = await response.json();
             localStorage.setItem("access_token", data.access_token); // Store token in localStorage
-            console.log("Login successful, access_token saved");
+            console.log("Login successful, access_token saved",data.access_token);
 
             setIsLoggedIn(true); // Trigger useEffect to navigate
         } catch (error) {

@@ -2,47 +2,48 @@ import routes from './routes';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Fragment } from 'react';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
-
+import { WebSocketProvider } from './api/websocket';
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                {routes.map((route, index) => {
-                    const Page = route.component;
-                    console.log('route layout', route.layout);
-                    let Layout;
-                    Layout = Fragment;
-                    // if (route.layout) {
-                    //     api = DefaultLayout;
-                    // } else if (route.layoutStaff) {
-                    //     api = LayoutStaff;
-                    // } else {
-                    //
-                    // }
-                    const allowedRoles = route.allowedRoles || [];
+        <WebSocketProvider><BrowserRouter>
+        <Routes>
+            {routes.map((route, index) => {
+                const Page = route.component;
+                console.log('route layout', route.layout);
+                let Layout;
+                Layout = Fragment;
+                // if (route.layout) {
+                //     api = DefaultLayout;
+                // } else if (route.layoutStaff) {
+                //     api = LayoutStaff;
+                // } else {
+                //
+                // }
+                const allowedRoles = route.allowedRoles || [];
 
-                    const element = (
-                        <Layout>
-                            <Page />
-                        </Layout>
-                    );
+                const element = (
+                    <Layout>
+                        <Page />
+                    </Layout>
+                );
 
-                    return route.protected ? (
-                        <Route
-                            key={index}
-                            path={route.path}
-                            element={
-                                <ProtectedRoute allowedRoles={allowedRoles}>
-                                    {element}
-                                </ProtectedRoute>
-                            }
-                        />
-                    ) : (
-                        <Route key={index} path={route.path} element={element} />
-                    );
-                })}
-            </Routes>
-        </BrowserRouter>
+                return route.protected ? (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        element={
+                            <ProtectedRoute allowedRoles={allowedRoles}>
+                                {element}
+                            </ProtectedRoute>
+                        }
+                    />
+                ) : (
+                    <Route key={index} path={route.path} element={element} />
+                );
+            })}
+        </Routes>
+    </BrowserRouter></WebSocketProvider>
+        
     );
 }
 
