@@ -1,5 +1,4 @@
-import HomePage from '../pages/Home/HomePage';
-import SignInPage from '../pages/CreateAccount.jsx';
+import Dashboard from '../pages/Home/HomePage';
 import Login from "../pages/Login.jsx";
 import AddMember from "../pages/AddMember/AddMember";
 import AddDevice from "../pages/AddDevice/AddDevice";
@@ -8,7 +7,7 @@ import Chart from "../pages/Dashboard/DashboardPage";
 const routes = [
     {
         path: '/',
-        component: HomePage,
+        component: Dashboard,
         protected: false,
     },
     {
@@ -19,7 +18,7 @@ const routes = [
     },
     {
         path: '/add-device',
-        // component: AddDevice,
+        component: AddDevice,
         // protected: true,
         // allowedRoles: ['staff'],
     },
@@ -44,7 +43,7 @@ const routes = [
     },
     {
         path: '/dashboard',
-        // component: Chart,
+        component: Chart,
         // protected: true,
         // allowedRoles: ['staff'],
     },
@@ -62,7 +61,7 @@ const routes = [
     },
     {
         path : '/sign-in',
-        component: SignInPage,
+        // component: SignInPage,
     },
 ];
 

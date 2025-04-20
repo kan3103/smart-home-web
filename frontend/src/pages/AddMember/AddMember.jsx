@@ -89,38 +89,44 @@ export const AddMember = () => {
                 ))}
             </div>
 
-            {showForm && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <Form onClose={() => setShowForm(false)} onAddMember={handleAddMember}/>
+            {/* Pagination Controls - Only show when form is not displayed */}
+            {!showForm && (
+                <div className="flex justify-center gap-2 mt-6 mb-8">
+                    <button
+                        className={`px-4 py-2 border rounded ${
+                            currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
+                        }`}
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        ←
+                    </button>
+                    <span className="px-4 py-2">
+                        Page {currentPage} / {totalPages}
+                    </span>
+                    <button
+                        className={`px-4 py-2 border rounded ${
+                            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
+                        }`}
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    >
+                        →
+                    </button>
                 </div>
             )}
 
-            {/* Pagination Controls */}
-            <div className="flex justify-center gap-2 mt-6">
-                <button
-                    className={`px-4 py-2 border rounded ${
-                        currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
-                    }`}
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                >
-                    ←
-                </button>
-                <span className="px-4 py-2">
-                            Page {currentPage} / {totalPages}
-                        </span>
-                <button
-                    className={`px-4 py-2 border rounded ${
-                        currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
-                    }`}
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                >
-                    →
-                </button>
-            </div>
+            {/* Form Modal with proper z-index and positioning */}
+            {showForm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="relative">
+                        <Form onClose={() => setShowForm(false)} onAddMember={handleAddMember}/>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default AddMember;
+
