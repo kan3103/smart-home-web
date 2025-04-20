@@ -4,30 +4,39 @@ import fan from "../../../assets/images/icon/fan.png";
 import Home_Temp from "../../../hooks/webSocket";
 import Switch from "../../../component/Home/Switch";
 import axios from "axios";
-import {MYIP} from "../../../api/ip.js";
-const sendPostRequest = async (id,value) => {
-    const myip = MYIP; // Replace with your actual IP address
-    console.log(id)
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NDY1MTUxNn0.35KNdcNnmrXGbIaB_aBr1BjhdsMsAPL3GeIZhZlMXfI"
-    try {
-      const response = await axios.post(`http://${myip}/send/${id}`, {
-         value: value,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
+import { MYIP } from "../../../api/ip.js";
+const sendPostRequest = async (id, value) => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+        window.location.href = "/login";
+        return;
     }
-  };
+
+    try {
+        const response = await axios.post(
+            `http://${MYIP}/send/${id}`,
+            { value },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log("Response:", response.data);
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem("access_token");
+            window.location.href = "/login";
+        } else {
+            console.error("Error:", error);
+        }
+    }
+};
+
 const DeviceControl = () => {
-    const [temperature, humidity, devices] = Home_Temp();
+    const [temperature, humidity, door, devices] = Home_Temp();
     const [deviceList, setDeviceList] = useState([]);
 
     useEffect(() => {
@@ -77,3 +86,4 @@ const DeviceControl = () => {
 
 
 export default DeviceControl;
+

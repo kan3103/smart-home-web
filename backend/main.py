@@ -60,7 +60,7 @@ async def get_device(username: str = Depends(verify_token)):
 @app.post("/device/")
 async def add_device_new(device: dict = Body(...), username: str = Depends(verify_token)):
     await db.add_device(device["name"], device["ada_feed"], device["type"])
-    # print(device)
+
     return {"message": f"Device added by {username}", "device": device}
 
 

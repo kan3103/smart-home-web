@@ -4,11 +4,17 @@ import {MYIP} from "../api/ip.js";
 const Home_Temp = () => {
     const [temperature, setTemperature] = useState(null);
     const [humidity, setHumidity] = useState(null);
+    const [door, setDoor] = useState(null);
     const [devices, setDevices] = useState([]);
-    const myip = MYIP; 
     useEffect(() => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0NDY1MTUxNn0.35KNdcNnmrXGbIaB_aBr1BjhdsMsAPL3GeIZhZlMXfI'; 
-        const socket = new WebSocket(`ws://${myip}/ws?token=${token}`);
+        const token = localStorage.getItem("access_token");
+        console.log("Token:", token);
+        if (!token) {
+            window.location.href = "/login";
+            return;
+        }
+
+        const socket = new WebSocket(`ws://${MYIP}/ws?token=${token}`);
 
         socket.onopen = () => {
             console.log("WebSocket Connected");
@@ -16,14 +22,21 @@ const Home_Temp = () => {
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            if (data.status === 401) {
+                localStorage.removeItem("access_token");
+                window.location.href = "/login";
+            }
             
             if (data.topic === "temperature") {
                 console.log("Temperature:", data.message);
                 setTemperature(data.message);
             } else if (data.topic === "humidity") {
-                console.log("Humidity:", data.message);
                 setHumidity(data.message);
-            } else {
+            } else if (data.topic === "door"){
+                setDoor(data);
+                console.log("Door status:", data.value);
+            } 
+            else {
                 setDevices((prevDevices) => {
                     const existingDevice = prevDevices.find((d) => d.id === data.id);
                     if (existingDevice) {
@@ -50,7 +63,7 @@ const Home_Temp = () => {
         };
     }, []);
 
-    return [temperature, humidity, devices];
+    return [temperature, humidity, door, devices];
 };
 
 export default Home_Temp;

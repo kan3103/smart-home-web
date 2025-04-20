@@ -1,7 +1,8 @@
 import React from "react";
 import login2 from "../../../assets/images/loginPage/login2.png";
 import hostAvatar from "../../../assets/images/home/hostAvatar.png";
-import Search from "../../../component/Home/Search";
+// import Search from "../../../component/Home/Search";
+import Card from "../../../component/Home/Card";
 
 const Header = () => (
     <div className="flex w-full h-[66px] items-center justify-between px-6 py-3.5 bg-white border-b border-[#0000000d]">
@@ -15,6 +16,10 @@ const Header = () => (
         {/* <div className="flex-1 max-w-[700px] ">
             <Search />
         </div> */}
+        <div className="flex" style={{ transform: "rotate(-90deg)" }}>
+            <Card />
+        </div>
+
 
         {/* User Info */}
         <div className="flex items-center gap-3">
