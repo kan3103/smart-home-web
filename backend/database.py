@@ -69,7 +69,7 @@ async def save_temp_humi(topic: str, message: str):
 
 
 
-async def register_user(username: str, password: str):
+async def register_user(username: str, password: str, dob: str = None, level: str = None):
     async with SessionLocal() as session:
         # Kiểm tra username đã tồn tại chưa
         result = await session.execute(select(Member).where(Member.username == username))
@@ -79,7 +79,7 @@ async def register_user(username: str, password: str):
 
         hashed_password = hash_password(password)
 
-        user = Member(username=username, password=hashed_password)
+        user = Member(username=username, password=hashed_password, dob=dob, level=level)
 
         session.add(user)
         await session.commit()

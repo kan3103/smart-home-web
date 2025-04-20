@@ -16,21 +16,21 @@ const Login = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem("access_token");
-        if (token) {
-            navigate("/");
-        }
-    }, [navigate]);
+    // useEffect(() => {
+    //     const token = localStorage.getItem("access_token");
+    //     if (token) {
+    //         navigate("/");
+    //     }
+    // }, [navigate]);
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            const timer = setTimeout(() => {
-                navigate("/");
-            }, 2000);
-            return () => clearTimeout(timer);
-        }
-    }, [isLoggedIn, navigate]);
+    // useEffect(() => {
+    //     if (isLoggedIn) {
+    //         const timer = setTimeout(() => {
+    //             navigate("/");
+    //         }, 2000);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [isLoggedIn, navigate]);
 
     const handleLogin = async () => {
         setLoading(true);
@@ -53,6 +53,7 @@ const Login = () => {
             console.log("Login successful, access_token saved",data.access_token);
 
             setIsLoggedIn(true); // Trigger useEffect to navigate
+            navigate("/"); // Redirect to home page
         } catch (error) {
             console.error("Error during login:", error);
             setLoading(false);

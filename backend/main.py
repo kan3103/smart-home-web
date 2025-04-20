@@ -69,7 +69,7 @@ async def add_device_new(device: dict = Body(...), username: str = Depends(verif
 
 @app.post("/user/register")
 async def register_users(infor: dict = Body(...)):
-    return  await db.register_user(infor['username'], infor['password'])
+    return  await db.register_user(infor['username'], infor['password'], infor['dob'], infor['level'])
 
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):

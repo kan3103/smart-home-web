@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+    useCallback,
+} from "react";
+import { useNavigate } from "react-router-dom"; // 👈 Thêm
 import { MYIP } from "../api/ip.js";
 
 const WebSocketContext = createContext(null);
@@ -10,16 +18,19 @@ export const WebSocketProvider = ({ children }) => {
     const [devices, setDevices] = useState([]);
     const [connected, setConnected] = useState(false);
     const socketRef = useRef(null);
+    const navigate = useNavigate(); // 👈 Hook để điều hướng không reload
 
     const handleInvalidToken = useCallback(() => {
         localStorage.removeItem("access_token");
-        window.location.href = "/login";
-    }, []);
+        navigate("/login");  
+    }, [navigate]);
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
+
+        // Nếu không có token thì logout luôn
         if (!token) {
-            window.location.href = "/login";
+            handleInvalidToken();
             return;
         }
 
@@ -37,34 +48,42 @@ export const WebSocketProvider = ({ children }) => {
                 return;
             }
 
-            if (data.topic === "temperature") {
-                setTemperature(data.message);
-            } else if (data.topic === "humidity") {
-                setHumidity(data.message);
-            } else if (data.topic === "door") {
-                setDoor(data);
-            } else {
-                setDevices((prev) => {
-                    const index = prev.findIndex((d) => d.id === data.id);
-                    if (index !== -1) {
-                        const newDevices = [...prev];
-                        newDevices[index] = { ...newDevices[index], value: data.value };
-                        return newDevices;
-                    } else {
-                        return [...prev, data];
-                    }
-                });
+            switch (data.topic) {
+                case "temperature":
+                    setTemperature(data.message);
+                    break;
+                case "humidity":
+                    setHumidity(data.message);
+                    break;
+                case "door":
+                    setDoor(data);
+                    break;
+                default:
+                    setDevices((prev) => {
+                        const index = prev.findIndex((d) => d.id === data.id);
+                        if (index !== -1) {
+                            const newDevices = [...prev];
+                            newDevices[index] = {
+                                ...newDevices[index],
+                                value: data.value,
+                            };
+                            return newDevices;
+                        } else {
+                            return [...prev, data];
+                        }
+                    });
             }
         };
 
-        socket.onerror = (error) => {
-            window.location.href = "/login";
+        socket.onerror = () => {
+            handleInvalidToken();
         };
 
         socket.onclose = (event) => {
             setConnected(false);
             if (event.code !== 401 && localStorage.getItem("access_token")) {
-                window.location.href = "/login";
+                console.error("WebSocket closed unexpectedly:", event);
+                handleInvalidToken();
             }
         };
 
@@ -76,7 +95,9 @@ export const WebSocketProvider = ({ children }) => {
     }, [handleInvalidToken]);
 
     return (
-        <WebSocketContext.Provider value={{ temperature, humidity, door, devices, connected }}>
+        <WebSocketContext.Provider
+            value={{ temperature, humidity, door, devices, connected }}
+        >
             {children}
         </WebSocketContext.Provider>
     );
