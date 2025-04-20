@@ -34,7 +34,8 @@ async def websocket_endpoint(websocket: WebSocket):
     except Exception as e:
         print(f"WebSocket error: {e}")
     finally:
-        await web_socket_handler.remove_websocket(websocket)
+        web_socket_handler.remove_websocket(websocket)
+
         
 @app.get("/")
 def read_root():
