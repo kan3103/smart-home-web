@@ -7,7 +7,7 @@ import login4 from "../assets/images/loginPage/login4.png";
 import LoginButton from "../component/Login.jsx";
 import Loader from "../component/Loading";
 import LoadingOverlay from "../component/LoadingOverlay";
-import { MYIP } from "../api/ip.js"; // Import MYIP from your api file
+import { MYIP } from "../api/ip.js"; 
 
 const Login = () => {
     const [email, setEmail] = useState("");
