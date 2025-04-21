@@ -3,7 +3,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from sqlalchemy import func
 from models import Device, HomeStatus ,Member
-from passlib.context import CryptContext
 from auth import hash_password
 # Kết nối đến PostgreSQL
 DATABASE_URL = "postgresql+asyncpg://postgres:saturn@localhost:5432/smarthome"
@@ -87,7 +86,7 @@ async def register_user(username: str, password: str, dob: str = None, level: st
 
         return {"message": "User registered successfully", "user_id": user.id}
     
-async def get_user(username: str):
+async def get_member(username: str):
     async with SessionLocal() as session:
         # Kiểm tra username và mật khẩu
         result = await session.execute(select(Member).where(Member.username == username))

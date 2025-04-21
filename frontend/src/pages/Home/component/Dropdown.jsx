@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import { MYIP } from "../../../api/ip.js"; // Import MYIP from your api file
 const ProfileDropdown = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
@@ -13,9 +14,33 @@ const ProfileDropdown = () => {
         console.log("Go to Account");
     };
 
-    const handleLogoutClick = () => {
+    const handleLogoutClick = async () => {
+        const token = localStorage.getItem("access_token");
         localStorage.removeItem("access_token");
         console.log("Logged out successfully");
+
+        try {
+            const response = await axios.post(
+                `http://${MYIP}/token/revoke`,
+                { token: token },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            console.log("Response:", response.data);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                localStorage.removeItem("access_token");
+                window.location.href = "/login";
+            } else {
+                console.error("Error:", error);
+            }
+        }
+
         navigate("/login");
     };
 
