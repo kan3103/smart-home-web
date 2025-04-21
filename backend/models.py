@@ -43,7 +43,7 @@ class Member(User):
     username = Column(String, unique=True, index=True)
     password = Column(String)
     dob = Column(Date)
-    level = Column(String)
+    level = Column(String, default="member") 
 
     __mapper_args__ = {
         'polymorphic_identity': 'member',
