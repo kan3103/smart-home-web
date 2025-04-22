@@ -2,10 +2,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from sqlalchemy import func
-from models import Device, HomeStatus ,Member
+from models import Device, HomeStatus, Member, AccessRecord, Notification
 from auth import hash_password
 # Kết nối đến PostgreSQL
-DATABASE_URL = "postgresql+asyncpg://postgres:saturn@localhost:5432/smarthome"
+DATABASE_URL = "postgresql+asyncpg://postgres:310304@localhost:5432/smarthome"
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -92,29 +92,65 @@ async def get_member(username: str):
         result = await session.execute(select(Member).where(Member.username == username))
         user = result.scalar_one_or_none()
         return user
-
-
-def exclude_password(user):
-    if isinstance(user, Member):
-        user_dict = {
-            "id": user.id,
-            "username": user.username,
-            "dob": user.dob,
-            "level": user.level
-        }
-        return user_dict
-    return user
-
-async def get_member_safe(username: str):
-    user = await get_member(username)
-    if user:
-        return exclude_password(user)
-    return None
-
+    
 async def get_all_users():
     async with SessionLocal() as session:
+        stmt = select(Member.id, Member.username, Member.dob, Member.level)
+        result = await session.execute(stmt)
+        users = result.all()  
+        
+        user_dicts = [
+            {"id": u.id, "username": u.username, "dob": u.dob, "level": u.level}
+            for u in users
+        ]
+        return user_dicts
+    
+async def add_access_record(id: str):
+    async with SessionLocal() as session:
+        if not id:
+            record = AccessRecord( user_id = id, dangerous = True)
+            session.add(record)
+            await session.commit()
+            await session.refresh(record)  
+        else:
+            record = AccessRecord(user_id = id, dangerous = False)
+            session.add(record)
+            await session.commit()
+        return record
+
+async def create_notification(member_id: int, message: str):
+    async with SessionLocal() as session:
+        notification = Notification(member_id=member_id, message=message)
+        session.add(notification)
+        await session.commit()
+        await session.refresh(notification)  
+        return notification
+
+async def get_notification(noti_id: int):
+    async with SessionLocal() as session:
         result = await session.execute(
-            select(Member)
+            select(Notification).where(Notification.id == noti_id)
         )
-        users = result.scalars().all()
-        return [exclude_password(user) for user in users]
+        notification = result.scalar_one_or_none()
+        return notification
+async def get_notifications(member_id: int):
+    async with SessionLocal() as session:
+        result = await session.execute(
+            select(Notification).where(Notification.member_id == member_id).order_by(Notification.created_at.desc())
+        )
+        notifications = result.scalars().all()
+        return notifications
+    
+async def mark_notification_as_read(notification_id: int):
+    async with SessionLocal() as session:
+        result = await session.execute(
+            select(Notification).where(Notification.id == notification_id)
+        )
+        notification = result.scalar_one_or_none()
+
+        if notification:
+            notification.is_read = True
+            await session.commit() 
+            await session.refresh(notification)  
+            return notification
+        return None

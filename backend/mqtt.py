@@ -102,6 +102,8 @@ class WebSocketHandler(MQTTObserver):
         elif topic == "humidity":
             self._last_message[1] = message
             data = {"topic": topic, "message": message}
+        elif topic == "noti":
+            data = {"topic": topic, "message": message}
         else:
             data = await get_devices('bbc-'+topic)
             data = {"topic": topic, "value": message, "name": data.name, "type": data.type, "id": data.id}

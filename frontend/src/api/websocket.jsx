@@ -58,6 +58,9 @@ export const WebSocketProvider = ({ children }) => {
                 case "door":
                     setDoor(data);
                     break;
+                case "noti":
+                    alert(data.message);
+                    break;
                 default:
                     setDevices((prev) => {
                         const index = prev.findIndex((d) => d.id === data.id);

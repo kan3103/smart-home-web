@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Float, Date, func , ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Date, func , ForeignKey , Boolean, Text, DateTime
 from sqlalchemy.orm import relationship
 
 
@@ -35,6 +35,7 @@ class User(Base):
         'polymorphic_identity': 'user',
         'polymorphic_on': type
     }
+    access_records = relationship("AccessRecord", back_populates="user")
 
 class Member(User):
     __tablename__ = "members"
@@ -48,7 +49,7 @@ class Member(User):
     __mapper_args__ = {
         'polymorphic_identity': 'member',
     }
-
+    notifications = relationship("Notification", back_populates="user")
 class Guest(User):
     __tablename__ = "guests"
 
@@ -60,3 +61,23 @@ class Guest(User):
         'polymorphic_identity': 'guest',
     }
 
+class AccessRecord(Base):
+    __tablename__ = "access_records"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    timestamp = Column(DateTime, default=func.now())
+    dangerous = Column(Boolean)
+
+    user = relationship("User", back_populates="access_records")
+    
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    member_id = Column(Integer, ForeignKey("members.id", ondelete="CASCADE"), nullable=False)
+    message = Column(Text, nullable=False)
+    is_read = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=func.now())
+
+    user = relationship("Member", back_populates="notifications")
