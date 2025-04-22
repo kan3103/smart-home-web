@@ -1,13 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState, useEffect } from "react";
-import login2 from "../assets/images/loginPage/login2.png";
-import login0 from "../assets/images/loginPage/login0.png";
-import login3 from "../assets/images/loginPage/login3.png";
-import login4 from "../assets/images/loginPage/login4.png";
-import LoginButton from "../component/Login.jsx";
-import Loader from "../component/Loading";
-import LoadingOverlay from "../component/LoadingOverlay";
-import { MYIP } from "../api/ip.js"; 
+import login2 from "../../assets/images/loginPage/login2.png";
+import login0 from "../../assets/images/loginPage/login0.png";
+import login3 from "../../assets/images/loginPage/login3.png";
+import login4 from "../../assets/images/loginPage/login4.png";
+import LoginButton from "../../component/Login.jsx";
+import Loader from "../../component/Loading";
+import LoadingOverlay from "../../component/LoadingOverlay";
+import { MYIP } from "../../api/ip.js";
 
 const Login = () => {
     const [email, setEmail] = useState("");

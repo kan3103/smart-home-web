@@ -77,6 +77,11 @@ async def register_users(infor: dict = Body(...), username: str = Depends(get_cu
     
     return  await db.register_user(infor['username'], infor['password'])
 
+@app.get("/user")
+async def get_users(username: str = Depends(get_current_admin)):
+    users = await db.get_all_users()
+    return users
+
 @app.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await db.get_member(form_data.username)
@@ -91,5 +96,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 async def revoke_token(token: dict = Body(...), username: str = Depends(verify_token)):
     blacklist(token["token"])
     return {"message": "Token revoked"}
+
 
 

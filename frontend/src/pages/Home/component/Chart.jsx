@@ -146,7 +146,6 @@ const Chart = () => {
 
     return (
         <div className="bg-white rounded-2xl shadow-md p-4">
-            <h2 className="text-lg font-semibold mb-2 ">Environment Trends</h2>
             <div className="grid grid-cols-1 gap-4">
                 <div className="h-48">
                     {chartData.datasets.length > 0 && <Line options={options} data={chartData}/>}

@@ -1,13 +1,14 @@
-import Dashboard from '../pages/Home/HomePage';
-import Login from "../pages/Login.jsx";
+import Home from '../pages/Home/HomePage';
+import Login from "../pages/Login/Login.jsx";
 import AddMember from "../pages/AddMember/AddMember";
 import AddDevice from "../pages/AddDevice/AddDevice";
-import Chart from "../pages/Dashboard/DashboardPage";
+import Dashboard from "../pages/Dashboard/DashboardPage";
+import Profile from "../pages/Profile/ProfilePage";
 
 const routes = [
     {
         path: '/',
-        component: Dashboard,
+        component: Home,
         protected: false,
     },
     {
@@ -25,9 +26,6 @@ const routes = [
     {
         path: '/login',
         component: Login,
-        // layout: false,
-        // layoutStaff: false,
-        // protected: false,
     },
     {
         path: '/add-member',
@@ -37,13 +35,13 @@ const routes = [
     },
     {
         path: '/profile',
-        // component: Profile,
-        protected: true,
-        allowedRoles: ['admin'],
+        component: Profile,
+        // protected: true,
+        // allowedRoles: ['admin'],
     },
     {
         path: '/dashboard',
-        component: Chart,
+        component: Dashboard,
         // protected: true,
         // allowedRoles: ['staff'],
     },
