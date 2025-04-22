@@ -5,7 +5,7 @@ from sqlalchemy import func
 from models import Device, HomeStatus ,Member
 from auth import hash_password
 # Kết nối đến PostgreSQL
-DATABASE_URL = "postgresql+asyncpg://postgres:310304@localhost:5432/smarthome"
+DATABASE_URL = "postgresql+asyncpg://postgres:saturn@localhost:5432/smarthome"
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -85,10 +85,36 @@ async def register_user(username: str, password: str, dob: str = None, level: st
         await session.refresh(user)  # load lại từ DB nếu cần ID hoặc thông tin khác
 
         return {"message": "User registered successfully", "user_id": user.id}
-    
+
 async def get_member(username: str):
     async with SessionLocal() as session:
         # Kiểm tra username và mật khẩu
         result = await session.execute(select(Member).where(Member.username == username))
         user = result.scalar_one_or_none()
         return user
+
+
+def exclude_password(user):
+    if isinstance(user, Member):
+        user_dict = {
+            "id": user.id,
+            "username": user.username,
+            "dob": user.dob,
+            "level": user.level
+        }
+        return user_dict
+    return user
+
+async def get_member_safe(username: str):
+    user = await get_member(username)
+    if user:
+        return exclude_password(user)
+    return None
+
+async def get_all_users():
+    async with SessionLocal() as session:
+        result = await session.execute(
+            select(Member)
+        )
+        users = result.scalars().all()
+        return [exclude_password(user) for user in users]
