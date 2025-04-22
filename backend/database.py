@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from sqlalchemy import func
-from models import Device, HomeStatus ,Member
+from models import Device, HomeStatus, Member, AccessRecord, Notification
 from auth import hash_password
 # Kết nối đến PostgreSQL
 DATABASE_URL = "postgresql+asyncpg://postgres:310304@localhost:5432/smarthome"
@@ -92,3 +92,36 @@ async def get_member(username: str):
         result = await session.execute(select(Member).where(Member.username == username))
         user = result.scalar_one_or_none()
         return user
+    
+async def get_all_users():
+    async with SessionLocal() as session:
+        stmt = select(Member.id, Member.username, Member.dob, Member.level)
+        result = await session.execute(stmt)
+        users = result.all()  
+        
+        user_dicts = [
+            {"id": u.id, "username": u.username, "dob": u.dob, "level": u.level}
+            for u in users
+        ]
+        return user_dicts
+    
+async def add_access_record(id: str):
+    async with SessionLocal() as session:
+        if not id:
+            record = AccessRecord( user_id = id, dangerous = True)
+            session.add(record)
+            await session.commit()
+            await session.refresh(record)  
+        else:
+            record = AccessRecord(user_id = id, dangerous = False)
+            session.add(record)
+            await session.commit()
+        return record
+
+async def create_notification(member_id: int, message: str):
+    async with SessionLocal() as session:
+        notification = Notification(member_id=member_id, message=message)
+        session.add(notification)
+        await session.commit()
+        await session.refresh(notification)  
+        return notification
