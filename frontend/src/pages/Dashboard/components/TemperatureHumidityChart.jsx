@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Home_Temp from "../../../hooks/webSocket";
 import {
   LineChart,
   Line,
@@ -9,20 +10,17 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import Home_Temp from "../../../hooks/webSocket";
 
 const TemperatureHumidityChart = () => {
   const [temperature, humidity] = Home_Temp();
   const [chartData, setChartData] = useState([]);
   
   useEffect(() => {
-    // Add data points with timestamps
     if (temperature !== null && humidity !== null) {
       const now = new Date();
       const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       
       setChartData(prevData => {
-        // Keep only the last 20 data points to prevent chart overcrowding
         const newData = [...prevData, { time: timeStr, temperature, humidity }];
         if (newData.length > 20) {
           return newData.slice(newData.length - 20);

@@ -87,7 +87,7 @@ const Card = () => {
             </div>
 
             <div className="navigation-card">
-                <a href="#" className="tab">
+                <a href="/profile" className="tab">
                     <svg width={104} height={100} viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="21.5" y="3.5" width={60} height={60} rx={30} stroke="black" strokeWidth={7} />
                         <g clipPath="url(#clip0_41_27)">

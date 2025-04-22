@@ -85,7 +85,7 @@ async def register_user(username: str, password: str, dob: str = None, level: st
         await session.refresh(user)  # load lại từ DB nếu cần ID hoặc thông tin khác
 
         return {"message": "User registered successfully", "user_id": user.id}
-    
+
 async def get_member(username: str):
     async with SessionLocal() as session:
         # Kiểm tra username và mật khẩu
@@ -125,3 +125,32 @@ async def create_notification(member_id: int, message: str):
         await session.commit()
         await session.refresh(notification)  
         return notification
+
+async def get_notification(noti_id: int):
+    async with SessionLocal() as session:
+        result = await session.execute(
+            select(Notification).where(Notification.id == noti_id)
+        )
+        notification = result.scalar_one_or_none()
+        return notification
+async def get_notifications(member_id: int):
+    async with SessionLocal() as session:
+        result = await session.execute(
+            select(Notification).where(Notification.member_id == member_id).order_by(Notification.created_at.desc())
+        )
+        notifications = result.scalars().all()
+        return notifications
+    
+async def mark_notification_as_read(notification_id: int):
+    async with SessionLocal() as session:
+        result = await session.execute(
+            select(Notification).where(Notification.id == notification_id)
+        )
+        notification = result.scalar_one_or_none()
+
+        if notification:
+            notification.is_read = True
+            await session.commit() 
+            await session.refresh(notification)  
+            return notification
+        return None

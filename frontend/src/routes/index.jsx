@@ -1,14 +1,14 @@
-import HomePage from '../pages/Home/HomePage';
-import SignInPage from '../pages/CreateAccount.jsx';
-import Login from "../pages/Login.jsx";
+import Home from '../pages/Home/HomePage';
+import Login from "../pages/Login/Login.jsx";
 import AddMember from "../pages/AddMember/AddMember";
-import AddDevice from "../pages/AddMember/AddDevice";
-import Chart from "../pages/Dashboard/DashboardPage";
+import AddDevice from "../pages/AddDevice/AddDevice";
+import Dashboard from "../pages/Dashboard/DashboardPage";
+import Profile from "../pages/Profile/ProfilePage";
 
 const routes = [
     {
         path: '/',
-        component: HomePage,
+        component: Home,
         protected: false,
     },
     {
@@ -19,16 +19,13 @@ const routes = [
     },
     {
         path: '/add-device',
-        // component: AddDevice,
+        component: AddDevice,
         // protected: true,
         // allowedRoles: ['staff'],
     },
     {
         path: '/login',
         component: Login,
-        // layout: false,
-        // layoutStaff: false,
-        // protected: false,
     },
     {
         path: '/add-member',
@@ -38,13 +35,13 @@ const routes = [
     },
     {
         path: '/profile',
-        // component: Profile,
-        protected: true,
-        allowedRoles: ['admin'],
+        component: Profile,
+        // protected: true,
+        // allowedRoles: ['admin'],
     },
     {
         path: '/dashboard',
-        // component: Chart,
+        component: Dashboard,
         // protected: true,
         // allowedRoles: ['staff'],
     },
@@ -62,7 +59,7 @@ const routes = [
     },
     {
         path : '/sign-in',
-        component: SignInPage,
+        // component: SignInPage,
     },
 ];
 

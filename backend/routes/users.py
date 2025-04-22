@@ -10,7 +10,7 @@ async def register_users(infor: dict = Body(...), username: str = Depends(get_cu
         raise HTTPException(status_code=400, detail="Username and password are required")
     return await db.register_user(infor['username'], infor['password'])
 
-@router.get("/user/")
+@router.get("/user")
 async def get_user(username: str = Depends(verify_token)):
     users = await db.get_all_users()
     return users

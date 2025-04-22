@@ -8,9 +8,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Line,
-  LineChart,
-  ComposedChart
 } from "recharts";
 import Home_Temp from "../../../hooks/webSocket";
 import Weather from "../../../api/weatherMapAPI";
