@@ -7,7 +7,7 @@ import {MYIP} from "../../api/ip.js";
 
 const defaultAvatar = "https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg";
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 4;
 
 export const AddMember = () => {
     const [members, setMembers] = useState([]);
