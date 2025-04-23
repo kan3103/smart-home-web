@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
-from sqlalchemy import func
+from sqlalchemy import func, delete
 from models import Device, HomeStatus, Member, AccessRecord, Notification
 from auth import hash_password
 # Kết nối đến PostgreSQL
@@ -118,6 +118,15 @@ async def add_access_record(id: str):
             await session.commit()
         return record
 
+async def get_access_records():
+    async with SessionLocal() as session:
+        result = await session.execute(
+            select(AccessRecord).order_by(AccessRecord.timestamp.desc())
+        )
+        records = result.scalars().all()
+        return records
+
+
 async def create_notification(member_id: int, message: str):
     async with SessionLocal() as session:
         notification = Notification(member_id=member_id, message=message)
@@ -133,6 +142,7 @@ async def get_notification(noti_id: int):
         )
         notification = result.scalar_one_or_none()
         return notification
+    
 async def get_notifications(member_id: int):
     async with SessionLocal() as session:
         result = await session.execute(
@@ -140,7 +150,15 @@ async def get_notifications(member_id: int):
         )
         notifications = result.scalars().all()
         return notifications
-    
+
+async def delete_notification(noti_id: int):
+    async with SessionLocal() as session:
+        await session.execute(
+            delete(Notification).where(Notification.id == noti_id)
+        )
+        await session.commit()
+        return {"messase": "Xóa thành công"}
+
 async def mark_notification_as_read(notification_id: int):
     async with SessionLocal() as session:
         result = await session.execute(
