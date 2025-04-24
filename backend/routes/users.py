@@ -14,3 +14,7 @@ async def register_users(infor: dict = Body(...), username: str = Depends(get_cu
 async def get_user(username: str = Depends(verify_token)):
     users = await db.get_all_users()
     return users
+
+@router.delete("/user/delete/{user_id}")
+async def delete_user(user_id: int, username: str = Depends(get_current_admin)):
+    return await db.delete_user(user_id)
