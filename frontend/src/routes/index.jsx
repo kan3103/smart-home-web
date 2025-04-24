@@ -4,6 +4,7 @@ import AddMember from "../pages/AddMember/AddMember";
 import AddDevice from "../pages/AddDevice/AddDevice";
 import Dashboard from "../pages/Dashboard/DashboardPage";
 import Profile from "../pages/Profile/ProfilePage";
+import NotificationPage from "../pages/Notification/Notification";
 
 const routes = [
     {
@@ -52,10 +53,10 @@ const routes = [
         allowedRoles: ['admin'],
     },
     {
-        path: '/print-history-staff',
-        // component: PrintHistoryStaff,
-        protected: true,
-        allowedRoles: ['staff'],
+        path: '/notification',
+        component: NotificationPage,
+        // protected: true,
+        // allowedRoles: ['staff'],
     },
     {
         path : '/sign-in',
