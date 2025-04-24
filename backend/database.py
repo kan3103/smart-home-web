@@ -85,6 +85,15 @@ async def register_user(username: str, password: str, dob: str = None, level: st
         await session.refresh(user)  # load lại từ DB nếu cần ID hoặc thông tin khác
 
         return {"message": "User registered successfully", "user_id": user.id}
+    
+async def delete_user(user_id: int):
+    async with SessionLocal() as session:
+        user = await session.get(Member, user_id)
+        if not user:
+            return {"error": "User not found"}
+        await session.delete(user)
+        await session.commit()
+        return {"message": "User deleted successfully"}
 
 async def get_member(username: str):
     async with SessionLocal() as session:
@@ -121,10 +130,27 @@ async def add_access_record(id: str):
 async def get_access_records():
     async with SessionLocal() as session:
         result = await session.execute(
-            select(AccessRecord).order_by(AccessRecord.timestamp.desc())
+            select(
+                AccessRecord.dangerous,
+                AccessRecord.id,
+                AccessRecord.timestamp,
+                Member.username
+            )
+            .join(Member, AccessRecord.user_id == Member.id, isouter=True)
+            .order_by(AccessRecord.timestamp.desc())
         )
-        records = result.scalars().all()
-        return records
+
+        records = result.all()
+        print(records)
+        return [
+            {
+                "dangerous": r[0],
+                "id": r[1],
+                "timestamp": r[2],
+                "username": r[3],
+            }
+            for r in records
+        ]
 
 
 async def create_notification(member_id: int, message: str):
