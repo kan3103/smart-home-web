@@ -18,6 +18,7 @@ export const WebSocketProvider = ({ children }) => {
     const [devices, setDevices] = useState([]);
     const [connected, setConnected] = useState(false);
     const socketRef = useRef(null);
+    const [noti,setnoti] = useState(true)
     const navigate = useNavigate(); // 👈 Hook để điều hướng không reload
 
     const handleInvalidToken = useCallback(() => {
@@ -60,6 +61,7 @@ export const WebSocketProvider = ({ children }) => {
                     break;
                 case "noti":
                     alert(data.message);
+                    setnoti(!noti);
                     break;
                 default:
                     setDevices((prev) => {
@@ -99,7 +101,7 @@ export const WebSocketProvider = ({ children }) => {
 
     return (
         <WebSocketContext.Provider
-            value={{ temperature, humidity, door, devices, connected }}
+            value={{ temperature, humidity, door, devices, connected ,noti}}
         >
             {children}
         </WebSocketContext.Provider>

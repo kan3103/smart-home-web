@@ -3,28 +3,30 @@ import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MYIP } from "../../api/ip";
+import Home_Temp from "../../hooks/webSocket";
 const NotificationPage = () => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-
+    const [temperature, humidity, door, devices ,connected, noti] = Home_Temp()
     useEffect(() => {
+        const fetchNotifications = async () => {
+            try {
+                const token = localStorage.getItem("access_token");
+                const response = await axios.get(`http://${MYIP}/notifications/all`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setNotifications(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching notifications:", error);
+                setLoading(false);
+            }
+        };
         fetchNotifications();
-    }, []);
+    }, [noti]);
 
-    const fetchNotifications = async () => {
-        try {
-            const token = localStorage.getItem("token");
-            const response = await axios.get(`http://${MYIP}/notifications/all`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setNotifications(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching notifications:", error);
-            setLoading(false);
-        }
-    };
+    
 
     const handleNotificationClick = async (id) => {
         try {

@@ -3,10 +3,35 @@ import home1 from "../../../assets/images/home/home1.png";
 import lock from "../../../assets/images/icon/lock.png";
 import unlock from "../../../assets/images/icon/unlock.png";
 import Home_Temp from "../../../hooks/webSocket";
+import axios from "axios";
+import { MYIP } from "../../../api/ip";
 const SlideBar = () => {
     const [temperature, humidity, door] = Home_Temp();
-    const [isLocked, setIsLocked] = useState(true);
 
+    const setthedoor = async (id, value) =>{
+        try {
+            const token = localStorage.getItem("access_token")
+            const response = await axios.post(
+                `http://${MYIP}/send/${id}`,
+                { value },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+    
+            console.log("Response:", response.data);
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                localStorage.removeItem("access_token");
+                window.location.href = "/login";
+            } else {
+                console.error("Error:", error);
+            }
+        }
+    }
     return (
         <div className="w-full bg-white rounded-[15px] p-6 shadow-md flex justify-between items-center relative">
             {/* Phần Chào Mừng */}
@@ -22,7 +47,7 @@ const SlideBar = () => {
                 </div>
                 {/* Nút khóa/mở khóa */}
                 <button 
-                    onClick={() => setIsLocked(!isLocked)}
+                    onClick={() => setthedoor(door.id,door.value==="0"? "1":"0")}
                     className="mt-2 flex items-center gap-2 px-4 py-2 bg-[#6b6bf9] text-white font-bold rounded-lg border border-black transition-transform transform hover:scale-105 active:scale-95"
                 >
                     <img className="w-4 h-4" src={door?(door.value ? lock : unlock):lock} alt="Lock Icon" />

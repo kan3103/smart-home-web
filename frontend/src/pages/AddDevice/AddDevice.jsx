@@ -5,17 +5,33 @@ import DeviceForm from "./DeviceForm";
 import light from "../../assets/images/icon/light.png";
 import fan from "../../assets/images/icon/fan.png";
 import axios from "axios";
-
+import { MYIP } from "../../api/ip";
 const AddDevice = () => {
     const [, , devices] = Home_Temp(); // Get devices from the same hook used in HomePage
     const [deviceList, setDeviceList] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
-        if (devices) {
-            setDeviceList([...devices]);
+        const setdevice = async () =>{
+            const token = localStorage.getItem("access_token")
+            if (!token) {
+                window.location.href = "/login";
+                return;
+            }
+            const response = await axios.get(
+                `http://${MYIP}/device`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            setDeviceList(response.data)
         }
-    }, [devices]);
+        
+        setdevice()
+    }, []);
 
     const handleAddDevice = async (deviceData) => {
         const token = localStorage.getItem("access_token");
@@ -26,7 +42,7 @@ const AddDevice = () => {
 
         try {
             const response = await axios.post(
-                "http://192.168.1.100:8000/devices/add",
+                `http://${MYIP}/devices/add`,
                 deviceData,
                 {
                     headers: {
