@@ -5,6 +5,7 @@ import AddDevice from "../pages/AddDevice/AddDevice";
 import Dashboard from "../pages/Dashboard/DashboardPage";
 import Profile from "../pages/Profile/ProfilePage";
 import NotificationPage from "../pages/Notification/Notification";
+import History from "../pages/History/HistoryLog";
 
 const routes = [
     {
@@ -47,10 +48,10 @@ const routes = [
         // allowedRoles: ['staff'],
     },
     {
-        path: '/print-history',
-        // component: History,
-        protected: true,
-        allowedRoles: ['admin'],
+        path: '/history',
+        component: History,
+        // protected: true,
+        // allowedRoles: ['admin'],
     },
     {
         path: '/notification',

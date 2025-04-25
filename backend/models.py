@@ -81,3 +81,4 @@ class Notification(Base):
     created_at = Column(DateTime, default=func.now())
 
     user = relationship("Member", back_populates="notifications")
+

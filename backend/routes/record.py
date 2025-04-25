@@ -24,7 +24,6 @@ async def get_all_record(username: str = Depends(verify_token)):
     return await db.get_access_records()
 
 
-
 @router.get("/notifications/all")
 async def get_all_notifications(username: str = Depends(verify_token)):
     user = await db.get_member(username=username)

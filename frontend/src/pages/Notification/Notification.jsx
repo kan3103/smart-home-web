@@ -26,7 +26,7 @@ const NotificationPage = () => {
         fetchNotifications();
     }, [noti]);
 
-    
+
 
     const handleNotificationClick = async (id) => {
         try {
@@ -35,8 +35,8 @@ const NotificationPage = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             // Update local state to mark as read
-            setNotifications(prevNotifications => 
-                prevNotifications.map(notification => 
+            setNotifications(prevNotifications =>
+                prevNotifications.map(notification =>
                     notification.id === id ? { ...notification, is_read: true } : notification
                 )
             );
@@ -49,8 +49,8 @@ const NotificationPage = () => {
         <div className="p-4 bg-gray-100 min-h-screen">
             <div className="max-w-3xl mx-auto">
                 <div className="flex items-center mb-6">
-                    <button 
-                        onClick={() => navigate(-1)} 
+                    <button
+                        onClick={() => navigate(-1)}
                         className="mr-4 text-gray-600 hover:text-gray-900"
                     >
                         <FaArrowLeft />
@@ -70,7 +70,7 @@ const NotificationPage = () => {
                     ) : (
                         <div className="max-h-[70vh] overflow-y-auto custom-scrollbar">
                             {notifications.map((notification) => (
-                                <div 
+                                <div
                                     key={notification.id}
                                     onClick={() => handleNotificationClick(notification.id)}
                                     className={`flex items-start gap-4 p-4 border-b cursor-pointer transition-colors ${
