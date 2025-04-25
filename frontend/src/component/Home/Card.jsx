@@ -13,7 +13,7 @@ const Card = () => {
             </div>
 
             <div className="navigation-card">
-                <a href="#" className="tab">
+                <a href="/history" className="tab">
                     <div className="relative w-[25px] h-[25px] opacity-90 ">
                         <div className="relative h-[30px]">
                             <div className="absolute w-6 h-[27px] top-0 left-[0px]">

@@ -2,10 +2,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.future import select
 from sqlalchemy import func, delete
-from models import Device, HomeStatus, Member, AccessRecord, Notification
+from models import Device, HomeStatus, Member, AccessRecord, Notification, FacialRecognitionData
 from auth import hash_password
 # Kết nối đến PostgreSQL
-DATABASE_URL = "postgresql+asyncpg://postgres:310304@localhost:5432/smarthome"
+DATABASE_URL = "postgresql+asyncpg://postgres:saturn@localhost:5432/smarthome"
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -198,3 +198,18 @@ async def mark_notification_as_read(notification_id: int):
             await session.refresh(notification)  
             return notification
         return None
+
+# async def save_facial_recognition_data(user_id: int, image_paths: list):
+#     async with SessionLocal() as session:
+#         # Delete existing facial recognition data for this user
+#         await session.execute(
+#             delete(FacialRecognitionData).where(FacialRecognitionData.member_id == user_id)
+#         )
+#
+#         # Insert new facial recognition data
+#         for path in image_paths:
+#             face_data = FacialRecognitionData(member_id=user_id, image_path=path)
+#             session.add(face_data)
+#
+#         await session.commit()
+#         return {"message": "Facial recognition data saved successfully"}
