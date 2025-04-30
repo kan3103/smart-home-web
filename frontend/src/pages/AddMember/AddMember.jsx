@@ -15,6 +15,7 @@ export const AddMember = () => {
     const [showForm, setShowForm] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [deleteStatus, setDeleteStatus] = useState({ show: false, message: '', isError: false });
 
     const fetchMembers = async () => {
         setIsLoading(true);
@@ -45,6 +46,64 @@ export const AddMember = () => {
     useEffect(() => {
         fetchMembers();
     }, []);
+
+    const handleDeleteMember = async (userId) => {
+        if (!window.confirm("Are you sure you want to delete this user?")) {
+            return;
+        }
+
+        const token = localStorage.getItem("access_token");
+        
+        try {
+            await axios.delete(`http://${MYIP}/user/delete/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            
+            // Update local state to remove the deleted user
+            setMembers(prev => prev.filter(member => member.id !== userId));
+            
+            // Show success message
+            setDeleteStatus({
+                show: true,
+                message: "User deleted successfully!",
+                isError: false
+            });
+            
+            // Adjust current page if needed after deletion
+            const newTotalPages = Math.ceil((members.length - 1) / ITEMS_PER_PAGE);
+            if (currentPage > newTotalPages && newTotalPages > 0) {
+                setCurrentPage(newTotalPages);
+            }
+            
+        } catch (err) {
+            console.error("Error deleting member:", err);
+            
+            if (err.response?.status === 401) {
+                alert("Your session has expired. Please login again.");
+                window.location.href = "/login?redirect=members";
+            } else if (err.response?.status === 403) {
+                setDeleteStatus({
+                    show: true,
+                    message: "Only administrators can delete users!",
+                    isError: true
+                });
+            } else {
+                setDeleteStatus({
+                    show: true,
+                    message: "Failed to delete user. Please try again.",
+                    isError: true
+                });
+            }
+        }
+        
+        // Hide the status message after 3 seconds
+        setTimeout(() => {
+            setDeleteStatus(prev => ({...prev, show: false}));
+        }, 3000);
+    };
 
     const totalPages = Math.ceil(members.length / ITEMS_PER_PAGE);
     const displayedMembers = members.slice(
@@ -100,6 +159,13 @@ export const AddMember = () => {
                 </button>
             </div>
 
+            {/* Status message for delete operation */}
+            {deleteStatus.show && (
+                <div className={`w-full max-w-6xl mb-4 p-3 rounded-lg text-white ${deleteStatus.isError ? 'bg-red-500' : 'bg-green-500'}`}>
+                    {deleteStatus.message}
+                </div>
+            )}
+
             {/* Loading state */}
             {isLoading && <div className="text-center p-4">Loading members...</div>}
 
@@ -113,8 +179,19 @@ export const AddMember = () => {
                         displayedMembers.map((member) => (
                             <div
                                 key={member.id}
-                                className={`bg-white shadow-lg p-4 rounded-lg text-center flex flex-col items-center hover:scale-105 transition-transform duration-300 border-2 ${getBorderColor(member.level)}`}
+                                className={`bg-white shadow-lg p-4 rounded-lg text-center flex flex-col items-center hover:scale-105 transition-transform duration-300 border-2 ${getBorderColor(member.level)} relative`}
                             >
+                                {/* Trash icon in top right corner */}
+                                <button
+                                    onClick={() => handleDeleteMember(member.id)}
+                                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors duration-300"
+                                    title="Delete member"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                                
                                 {/* Avatar */}
                                 <img
                                     src={defaultAvatar}
